@@ -1,0 +1,5 @@
+{
+    "watch": ["nanodocs"],
+    "ignore": ["nanodocs/build"],
+    "ext": "js,json,ejs,html,scss,md"
+}

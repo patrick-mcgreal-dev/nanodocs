@@ -1,0 +1,81 @@
+<script>
+
+const icons = {
+    more: 'assets/images/expand_more_black_24dp.svg',
+    less: 'assets/images/expand_less_black_24dp.svg',
+    menu: 'assets/images/menu_book_black_24dp.svg',
+    close: 'assets/images/close_black_24dp.svg',
+}
+
+switchDoc(location.hash);
+
+window.onhashchange = () => {
+    switchDoc(location.hash);
+}
+
+function switchDoc(path) {
+
+    if (!path) {
+        window.location.hash = document.getElementsByClassName('markdown')[0].id;
+        return;
+    }
+
+    path = path.replace(/\#/g, '');
+
+    let anchors = path.split('+');
+    let docs = document.getElementsByClassName('markdown');
+
+    if (anchors.length > 1) {    
+    
+        for (let doc of docs) {
+
+            if (doc.id != anchors[0]) {
+                doc.classList.add('hidden');
+            } else {
+                doc.classList.remove('hidden');
+                document.getElementsByName(path)[0].scrollIntoView();
+            }
+
+        }
+
+    } else {
+    
+        for (let doc of docs) {
+
+            if (doc.id != path) {
+                doc.classList.add('hidden');
+            } else {
+                doc.classList.remove('hidden');
+                doc.parentElement.scrollTop = 0;
+            }
+
+        }
+
+    }
+}
+
+function toggleMenu() {
+
+    const menu = document.querySelector('.nav-menu');
+    toggleItem(menu);
+
+    const menuIcon = document.querySelector('.nav-headerIcon');
+    menuIcon.src = menuIcon.getAttribute('src') == icons.menu ? icons.close : icons.menu;
+
+}
+
+function toggleSubMenu(e) {
+
+    const submenu = e.nextElementSibling;
+    toggleItem(submenu);
+
+    const expandIcon = e.querySelector('.nav-expand');
+    expandIcon.src = expandIcon.getAttribute('src') == icons.more ? icons.less : icons.more;
+
+}
+
+function toggleItem(item) {
+    item.style.display = window.getComputedStyle(item).display == "none" ? "block" : "";
+}
+
+</script>

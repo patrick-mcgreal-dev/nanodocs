@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="nav-container">
+            <div class="nav">
+                <div class="nav-header">
+                    <h1 class="nav-headerText">
+                        <a href="./"><%= title %></a>
+                    </h1>
+                    <img class="nav-headerIcon" src="assets/images/menu_book_black_24dp.svg" onclick="toggleMenu()">
+                </div>
+                <ul class="nav-menu">
+                    <% docTree.forEach((item, i) => { %>
+                        <% if (item.type == 'file') { %>
+                            <li class="nav-itemContainer">
+                                <a class="nav-item" href="#<%= item.id %>">
+                                    <h1 class="nav-itemHeader nav-link"><%= item.header %></h1>
+                                </a>
+                            </li>
+                        <% } else { %>
+                            <li class="nav-itemContainer">
+                                <div class="nav-item" onclick="toggleSubMenu(this)">
+                                    <h1 class="nav-itemHeader nav-link"><%= item.header %></h1>
+                                    <img class="nav-expand" src="assets/images/expand_more_black_24dp.svg">
+                                </div>
+                                <ul class="nav-subMenu">
+                                <% for (let file of item.files) { %>
+                                    <li class="nav-itemContainer">
+                                        <a class="nav-item nav-link" href="#<%= file.id %>">
+                                            <h1 class="nav-itemHeader"><%= file.header %></h1>
+                                        </a>
+                                    </li>
+                                <% } %>
+                                </ul>
+                            </li>
+                        <% } %>
+                    <% }) %>
+                </ul>
+            </div>
+        </nav>
+        <div class="markdown-container">
+            <% docTree.forEach((item, i) => { %>
+                <% if (item.type == 'file') { %>
+                    <div class="markdown hidden" id="<%= item.id %>">
+                        <%- item.content %>
+                    </div>
+                <% } else { %>
+                    <% item.files.forEach((file, j) => { %>
+                        <div class="markdown hidden" id="<%= file.id %>">
+                            <%- file.content %>
+                        </div>
+                    <% }) %>
+                <% } %>
+            <% }) %>
+        </div>
+    </div>
+    <%- include('script.html') %>
+</body>
+</html>
