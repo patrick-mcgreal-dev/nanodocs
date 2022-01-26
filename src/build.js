@@ -64,7 +64,7 @@ function main() {
 
 }
 
-function getDocTree(dir, docStructure) {
+function getDocTree(dir, docStructure, folderName) {
 
     let tree = [];
 
@@ -80,7 +80,7 @@ function getDocTree(dir, docStructure) {
             tree.push({
                 type: 'folder',
                 header: item.folder,
-                files: getDocTree(folderPath, item.files)
+                files: getDocTree(folderPath, item.files, item.folder)
             });
 
         } else {
@@ -91,11 +91,19 @@ function getDocTree(dir, docStructure) {
             let tokens = ssg.tokenizeMarkdown(filePath);
             let header = tokens.find(t => t.type == 'heading' && t.depth == 1);
 
-            let content = ssg.parseMarkdown(filePath, getMarkedRenderer());
+            let anchor;
+
+            if (folderName) {
+                anchor = escapeLinkText(folderName).concat('+', escapeLinkText(header.text));
+            } else {
+                anchor = escapeLinkText(header.text);
+            }
+
+            let content = ssg.parseMarkdown(filePath, getMarkedRenderer(anchor));
 
             tree.push({
                 type: 'file',
-                id: getAnchorLinkText(header.text),
+                id: anchor,
                 header: header.text,
                 content: content
             });
@@ -108,24 +116,22 @@ function getDocTree(dir, docStructure) {
 
 }
 
-function getMarkedRenderer() {
-
-    let lastFirstLevelText = '';
+function getMarkedRenderer(fileAnchor) {
 
     return {
         heading(text, level) {
-            const escapedText = getAnchorLinkText(text);
             if (level == 1) {
-                lastFirstLevelText = escapedText;
-                return `<h${level} name="${escapedText}">${text}</h${level}>`;
+                return `<h${level} name="${fileAnchor}">${text}</h${level}>`;
             } else {
-                return `<h${level} name="${lastFirstLevelText + '+' + escapedText}">${text}</h${level}>`;
+                let headerAnchor = fileAnchor ? fileAnchor.concat('+', escapeLinkText(text)) : escapeLinkText(text);
+                return `<h${level} name="${headerAnchor}">${text}</h${level}>`;
             }
         }   
     }
+    
 }
 
-function getAnchorLinkText(input) {
+function escapeLinkText(input) {
     return input
         .toLowerCase()
         .replace(/[^\w]/g, '-')

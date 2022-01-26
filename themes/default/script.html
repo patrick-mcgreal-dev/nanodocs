@@ -23,32 +23,22 @@ function switchDoc(path) {
     path = path.replace(/\#/g, '');
 
     let anchors = path.split('+');
+    let docAnchor = anchors.length < 2 ? anchors[0] : anchors[0].concat('+', anchors[1]);
+    let headerAnchor = anchors.length == 3 ? anchors[2] : null;
+
     let docs = document.getElementsByClassName('markdown');
 
-    if (anchors.length > 1) {    
-    
-        for (let doc of docs) {
+    for (let doc of docs) {
 
-            if (doc.id != anchors[0]) {
-                doc.classList.add('hidden');
-            } else {
-                doc.classList.remove('hidden');
+        if (doc.id != docAnchor) {
+            doc.classList.add('hidden');
+        } else {
+            doc.classList.remove('hidden');
+            if (headerAnchor) {
                 document.getElementsByName(path)[0].scrollIntoView();
-            }
-
-        }
-
-    } else {
-    
-        for (let doc of docs) {
-
-            if (doc.id != path) {
-                doc.classList.add('hidden');
             } else {
-                doc.classList.remove('hidden');
                 doc.parentElement.scrollTop = 0;
             }
-
         }
 
     }

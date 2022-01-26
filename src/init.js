@@ -13,7 +13,7 @@ function main() {
         if (fs.existsSync(NANODOCS_DIR)) {
             return {
                 error: true,
-                message: 'There is already a folder called \'nanodocs\' in the working directory\nPlease remove this folder before trying again.' 
+                message: 'There is already a folder called \'nanodocs\' in the working directory. Please remove this folder before trying again.' 
             };
         }
 
