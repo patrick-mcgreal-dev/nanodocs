@@ -75,7 +75,7 @@ function getDocTree(dir, docStructure, folderName) {
         if (isParent) {
 
             let folderPath = path.join(dir, item.folder);
-            ssg.checkDirExists(folderPath, `Can't find a folder called "${item.folder}" in directory "${dir}. Please create this folder or remove it from your config.json.`);
+            ssg.checkDirExists(folderPath, `Can't find a folder called "${item.folder}" in directory "${dir}". Please create this folder or remove it from your config.json.`);
 
             tree.push({
                 type: 'folder',
@@ -86,7 +86,7 @@ function getDocTree(dir, docStructure, folderName) {
         } else {
 
             let filePath = path.join(dir, item + '.md');
-            ssg.checkDirExists(filePath, `Can't find a file called "${item + '.md'}" in directory "${dir}. Please create this file or remove it from your config.json.`);
+            ssg.checkDirExists(filePath, `Can't find a file called "${item + '.md'}" in directory "${dir}". Please create this file or remove it from your config.json.`);
 
             let tokens = ssg.tokenizeMarkdown(filePath);
             let header = tokens.find(t => t.type == 'heading' && t.depth == 1);
