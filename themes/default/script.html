@@ -54,9 +54,9 @@ function toggleMenu() {
 
 }
 
-function toggleSubMenu(e) {
+function toggleSubMenu(folderHeader) {
 
-    const submenu = e.nextElementSibling;
+    const submenu = document.getElementById('subMenu_' + folderHeader);
     toggleItem(submenu);
 
     const expandIcon = e.querySelector('.nav-expand');
