@@ -83,7 +83,7 @@ function getDocTree(dir, docStructure, folderName) {
 
             tree.push({
                 type: 'folder',
-                header: item.folder,
+                header: escapeLinkText(item.folder),
                 files: getDocTree(folderPath, item.files, item.folder)
             });
 
@@ -95,13 +95,8 @@ function getDocTree(dir, docStructure, folderName) {
             let tokens = ssg.tokenizeMarkdown(filePath);
             let header = tokens.find(t => t.type == 'heading' && t.depth == 1);
 
-            let anchor;
-
-            if (folderName) {
-                anchor = escapeLinkText(folderName).concat(ANCHOR_SEPARATOR, escapeLinkText(header.text));
-            } else {
-                anchor = escapeLinkText(header.text);
-            }
+            folderName = folderName ?? 'root';
+            let anchor = escapeLinkText(folderName).concat(ANCHOR_SEPARATOR, escapeLinkText(header.text));
 
             let content = ssg.parseMarkdown(filePath, getMarkedRenderer(anchor));
 

@@ -12,7 +12,7 @@
             <div class="nav">
                 <div class="nav-header">
                     <h1 class="nav-headerText">
-                        <a href="./"><%= title %></a>
+                        <a href="#"><%= title %></a>
                     </h1>
                     <img class="nav-headerIcon" src="assets/images/menu_book_black_24dp.svg" onclick="toggleMenu()">
                 </div>
@@ -26,18 +26,18 @@
                             </li>
                         <% } else { %>
                             <li class="nav-itemContainer">
-                                <div class="nav-item" onclick="toggleSubMenu('<%= item.header %>', this.querySelector('.nav-expand'))">
+                                <div class="nav-item" onclick="toggleSubMenu('<%= item.header %>')">
                                     <h1 class="nav-itemHeader nav-link"><%= item.header %></h1>
-                                    <img class="nav-expand" src="assets/images/expand_more_black_24dp.svg">
+                                    <img class="nav-expand" id="subMenuIcon_<%= item.header %>" src="assets/images/expand_more_black_24dp.svg">
                                 </div>
                                 <ul class="nav-subMenu" id="subMenu_<%= item.header %>">
-                                <% for (let file of item.files) { %>
-                                    <li class="nav-itemContainer">
-                                        <a class="nav-item nav-link" href="#<%= file.id %>">
-                                            <h1 class="nav-itemHeader"><%= file.header %></h1>
-                                        </a>
-                                    </li>
-                                <% } %>
+                                    <% for (let file of item.files) { %>
+                                        <li class="nav-itemContainer">
+                                            <a class="nav-item nav-link" href="#<%= file.id %>">
+                                                <h1 class="nav-itemHeader"><%= file.header %></h1>
+                                            </a>
+                                        </li>
+                                    <% } %>
                                 </ul>
                             </li>
                         <% } %>

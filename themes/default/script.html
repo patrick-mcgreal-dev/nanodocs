@@ -25,7 +25,9 @@ function switchDoc(path) {
     path = path.replace(/\#/g, '');
 
     let anchors = path.split(anchorSeparator);
-    let docAnchor = anchors.length < 2 ? anchors[0] : anchors[0].concat(anchorSeparator, anchors[1]);
+    let folderAnchor = anchors[0];
+    let fileAnchor = anchors[1];
+    let docAnchor = folderAnchor.concat(anchorSeparator, fileAnchor);
     let headerAnchor = anchors.length == 3 ? anchors[2] : null;
 
     let docs = document.getElementsByClassName('markdown');
@@ -44,6 +46,10 @@ function switchDoc(path) {
         }
 
     }
+
+    if (folderAnchor != 'root') {
+        openSubMenu(folderAnchor);
+    }
 }
 
 function toggleMenu() {
@@ -56,12 +62,22 @@ function toggleMenu() {
 
 }
 
-function toggleSubMenu(folderHeader, expandIcon) {
+function toggleSubMenu(folderHeader) {
 
     const submenu = document.getElementById('subMenu_' + folderHeader);
     toggleItem(submenu);
 
-    expandIcon.src = expandIcon.getAttribute('src') == icons.more ? icons.less : icons.more;
+    const submenuIcon = document.getElementById('subMenuIcon_' + folderHeader);
+    submenuIcon.src = submenuIcon.getAttribute('src') == icons.more ? icons.less : icons.more;
+
+}
+
+function openSubMenu(folderHeader) {
+
+    const submenu = document.getElementById('subMenu_' + folderHeader);
+
+    if (window.getComputedStyle(submenu).display == "none")
+        toggleSubMenu(folderHeader);
 
 }
 
