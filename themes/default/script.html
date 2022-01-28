@@ -1,5 +1,7 @@
 <script>
 
+const anchorSeparator = '<%= anchorSeparator %>';
+
 const icons = {
     more: 'assets/images/expand_more_black_24dp.svg',
     less: 'assets/images/expand_less_black_24dp.svg',
@@ -22,8 +24,8 @@ function switchDoc(path) {
 
     path = path.replace(/\#/g, '');
 
-    let anchors = path.split('+');
-    let docAnchor = anchors.length < 2 ? anchors[0] : anchors[0].concat('+', anchors[1]);
+    let anchors = path.split(anchorSeparator);
+    let docAnchor = anchors.length < 2 ? anchors[0] : anchors[0].concat(anchorSeparator, anchors[1]);
     let headerAnchor = anchors.length == 3 ? anchors[2] : null;
 
     let docs = document.getElementsByClassName('markdown');

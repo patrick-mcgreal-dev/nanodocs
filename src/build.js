@@ -4,6 +4,7 @@ const resolvePkg = require('resolve-package-path');
 const ssg = require('../lib/nano-ssg');
 
 const THEMES = [ 'default' ];
+let ANCHOR_SEPARATOR;
 
 function main() {
 
@@ -12,6 +13,8 @@ function main() {
         const WORKING_DIR = process.cwd();
         const MODULE_DIR = path.join(resolvePkg('nanodocs', WORKING_DIR), '../');
         const CONFIG = require(path.join(WORKING_DIR, 'nanodocs', 'config.json'));
+
+        ANCHOR_SEPARATOR = CONFIG.anchorSeparator ?? '+';
 
         const nanodocsDir = path.join(WORKING_DIR, 'nanodocs');
 
@@ -30,7 +33,8 @@ function main() {
 
         const docsData = {
             title: CONFIG.title,
-            docTree: getDocTree(documentationDir, CONFIG.docs)
+            docTree: getDocTree(documentationDir, CONFIG.docs),
+            anchorSeparator: ANCHOR_SEPARATOR
         }
 
         ssg.renderPage(path.join(themeDir, 'docs.ejs'), path.join(buildDir, 'index.html'), docsData);
@@ -94,7 +98,7 @@ function getDocTree(dir, docStructure, folderName) {
             let anchor;
 
             if (folderName) {
-                anchor = escapeLinkText(folderName).concat('+', escapeLinkText(header.text));
+                anchor = escapeLinkText(folderName).concat(ANCHOR_SEPARATOR, escapeLinkText(header.text));
             } else {
                 anchor = escapeLinkText(header.text);
             }
@@ -123,7 +127,7 @@ function getMarkedRenderer(fileAnchor) {
             if (level == 1) {
                 return `<h${level} name="${fileAnchor}">${text}</h${level}>`;
             } else {
-                let headerAnchor = fileAnchor ? fileAnchor.concat('+', escapeLinkText(text)) : escapeLinkText(text);
+                let headerAnchor = fileAnchor ? fileAnchor.concat(ANCHOR_SEPARATOR, escapeLinkText(text)) : escapeLinkText(text);
                 return `<h${level} name="${headerAnchor}">${text}</h${level}>`;
             }
         }   
