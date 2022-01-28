@@ -54,12 +54,11 @@ function toggleMenu() {
 
 }
 
-function toggleSubMenu(folderHeader) {
+function toggleSubMenu(folderHeader, expandIcon) {
 
     const submenu = document.getElementById('subMenu_' + folderHeader);
     toggleItem(submenu);
 
-    const expandIcon = e.querySelector('.nav-expand');
     expandIcon.src = expandIcon.getAttribute('src') == icons.more ? icons.less : icons.more;
 
 }
