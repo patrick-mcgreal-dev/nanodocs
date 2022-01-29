@@ -19,8 +19,8 @@
                 <ul class="nav-menu">
                     <% for (let item of docTree) { %>
                         <% if (item.type == 'file') { %>
-                            <li class="nav-itemContainer">
-                                <a class="nav-item" id="navLink_<%= item.id %>" href="#<%= item.id %>">
+                            <li class="nav-itemContainer" id="navItemContainer_<%= item.id %>">
+                                <a class="nav-item" href="#<%= item.id %>">
                                     <h1 class="nav-itemHeader nav-link"><%= item.header %></h1>
                                 </a>
                             </li>
@@ -32,8 +32,8 @@
                                 </div>
                                 <ul class="nav-subMenu" id="subMenu_<%= item.header %>">
                                     <% for (let file of item.files) { %>
-                                        <li class="nav-itemContainer">
-                                            <a class="nav-item nav-link" id="navLink_<%= file.id %>" href="#<%= file.id %>">
+                                        <li class="nav-itemContainer" id="navItemContainer_<%= file.id %>">
+                                            <a class="nav-item nav-link" href="#<%= file.id %>">
                                                 <h1 class="nav-itemHeader"><%= file.header %></h1>
                                             </a>
                                         </li>

@@ -36,10 +36,10 @@ function switchDoc(path) {
 
         if (doc.id != docAnchor) {
             closeElement(doc);
-            closeElement(document.getElementById('navLink_' + doc.id));
+            closeElement(document.getElementById('navItemContainer_' + doc.id));
         } else {
             openElement(doc);
-            openElement(document.getElementById('navLink_' + doc.id));
+            openElement(document.getElementById('navItemContainer_' + doc.id));
             if (headerAnchor) {
                 document.getElementsByName(path)[0].scrollIntoView();
             } else {

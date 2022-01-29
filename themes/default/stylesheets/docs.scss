@@ -35,9 +35,8 @@ body {
 .nav-headerText {
     flex-grow: 1;
 
-    font-family: museo;
     font-size: 1.5em;
-    font-weight: 180;
+    font-weight: 400;
 
     letter-spacing: 0.14em;
     
@@ -61,21 +60,31 @@ body {
         font-size: 0.83em;
         font-weight: 400;
         text-transform: uppercase;
+
+        &.open {
+            font-weight: 700;
+        }
     }
 }
 
 .nav-subMenu {
     display: none;
-    margin-left: 20px;
 
     &.open {
         display: block;
     }
     
     .nav-itemContainer {
+        padding-left: 20px;
+        border-left: 1px solid black;
+
         font-size: inherit;
         text-transform: none;
-        // list-style-type: disc;
+
+        &.open {
+            border-left: 2px solid black;
+            font-weight: 700;
+        }
     }
 }
 
@@ -87,11 +96,6 @@ body {
 
     padding-top: 14px;
     padding-bottom: 14px;
-
-    &.open {
-        background-color: black;
-        color: white;
-    }
 }
 
 .nav-item {
