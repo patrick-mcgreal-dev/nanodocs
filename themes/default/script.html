@@ -35,9 +35,11 @@ function switchDoc(path) {
     for (let doc of docs) {
 
         if (doc.id != docAnchor) {
-            doc.classList.add('hidden');
+            closeElement(doc);
+            closeElement(document.getElementById('navLink_' + doc.id));
         } else {
-            doc.classList.remove('hidden');
+            openElement(doc);
+            openElement(document.getElementById('navLink_' + doc.id));
             if (headerAnchor) {
                 document.getElementsByName(path)[0].scrollIntoView();
             } else {
@@ -55,7 +57,7 @@ function switchDoc(path) {
 function toggleMenu() {
 
     const menu = document.querySelector('.nav-menu');
-    toggleItem(menu);
+    toggleElement(menu);
 
     const menuIcon = document.querySelector('.nav-headerIcon');
     menuIcon.src = menuIcon.getAttribute('src') == icons.menu ? icons.close : icons.menu;
@@ -65,7 +67,7 @@ function toggleMenu() {
 function toggleSubMenu(folderHeader) {
 
     const submenu = document.getElementById('subMenu_' + folderHeader);
-    toggleItem(submenu);
+    toggleElement(submenu);
 
     const submenuIcon = document.getElementById('subMenuIcon_' + folderHeader);
     submenuIcon.src = submenuIcon.getAttribute('src') == icons.more ? icons.less : icons.more;
@@ -76,13 +78,21 @@ function openSubMenu(folderHeader) {
 
     const submenu = document.getElementById('subMenu_' + folderHeader);
 
-    if (window.getComputedStyle(submenu).display == "none")
+    if (!submenu.classList.contains('open'))
         toggleSubMenu(folderHeader);
 
 }
 
-function toggleItem(item) {
-    item.style.display = window.getComputedStyle(item).display == "none" ? "block" : "";
+function toggleElement(element) {
+    element.classList.toggle('open');
+}
+
+function openElement(element) {
+    element.classList.add('open');
+}
+
+function closeElement(element) {
+    element.classList.remove('open');
 }
 
 </script>
