@@ -4,6 +4,18 @@
 /* DOCS start */
 /* ******************************************************************************** */
 
+// FONT SIZING
+
+.fontSize-regular {
+    font-size: 90%;
+}
+
+.fontSize-large {
+    font-size: 100%; // 16px
+}
+
+// ROOT
+
 body {
     font-family: Helvetica, sans-serif;
 }
@@ -13,9 +25,10 @@ body {
     height: 100vh;
 }
 
-// nav
+// NAV
 
 .nav-container {
+    font-size: 16px; // fix nav font size across all theme variants
     flex: 0 0 280px;
     height: 100%;
 
@@ -76,13 +89,13 @@ body {
     
     .nav-itemContainer {
         padding-left: 20px;
-        border-left: 1px solid black;
+        border-left: 1px solid;
 
         font-size: inherit;
         text-transform: none;
 
         &.open {
-            border-left: 2px solid black;
+            border-left: 2px solid;
             font-weight: 700;
         }
     }
@@ -124,7 +137,7 @@ body {
     }
 
     padding: 0 30px;
-    margin-bottom: 80px;
+    // margin-bottom: 80px;
 
     h1 {
         width: 100%;
@@ -132,15 +145,14 @@ body {
         display: block;
         margin-bottom: 36px;
 
-        font-size: 1.8em;
+        // font-size: 1.8em;
+        font-size: 1.8rem;
         font-weight: 700;
         line-height: 1.25;
 
-        // padding: 0.3em;
-        // background-color: #d9ecff;
-
         padding-top: 20px; // anchor links ignore margin-top, so we have to use padding instead
-        padding-bottom: 0.3em;
+        // padding-bottom: 0.3em;
+        padding-bottom: 0.5rem;
         border-bottom: 3px solid;
 
         display: flex;
@@ -148,34 +160,48 @@ body {
     }
 
     h2 {
-        margin-top: 46px;
-        margin-bottom: 28px;
-        padding-bottom: 0.3em;
-        border-bottom: 2px solid lightgrey;
+        // margin-top: 46px;
+        margin-top: 2.875rem;
+        // margin-bottom: 28px;
+        margin-bottom: 1.75rem;
+        // padding-bottom: 0.3em;
+        padding-bottom: 0.45rem;
+        border-bottom: 2px solid;
+        border-color: lightgrey;
 
-        font-size: 1.5em;
+        // font-size: 1.5em;
+        font-size: 1.5rem;
         font-weight: 400;
-        line-height: 1.25;
+        // line-height: 1.25;
+        line-height: 1.875rem;
     }
 
     h3 {
-        margin-top: 24px;
-        margin-bottom: 16px;
+        // margin-top: 24px;
+        margin-top: 1.5rem;
+        // margin-bottom: 16px;
+        margin-bottom: 1rem;
 
-        font-size: 1.125em;
+        // font-size: 1.125em;
+        font-size: 1.125rem;
         font-weight: 700;
     }
 
     p {
-        margin-bottom: 20px;
+        // margin-bottom: 20px;
+        margin-bottom: 1.25rem;
 
-        font-size: 1.2em;
-        line-height: 1.5em;
+        // font-size: 1.2em;
+        font-size: 1.2rem;
+        // line-height: 1.5em;
+        line-height: 1.8rem;
     }
 
     ul {
-        margin-top: 8px;
-        margin-bottom: 16px;
+        // margin-top: 8px;
+        margin-top: 0.5rem;
+        // margin-bottom: 16px;
+        margin-bottom: 1rem;
         padding-left: 2em;
         list-style-type: disc;
     }
@@ -185,8 +211,10 @@ body {
     }
 
     li {
-        font-size: 1.2em;
-        line-height: 1.5em;
+        // font-size: 1.2em;
+        font-size: 1.1875rem;
+        // line-height: 1.5em;
+        line-height: 1.8125rem;
     }
 
     a {
@@ -200,8 +228,12 @@ body {
         font-weight: bold;
     }
 
+    em {
+        font-style: italic;
+    }
+
     img {
-        margin: 1em 0;
+        margin: 1rem 0;
         max-width: 100%;
         height: auto;
     }
@@ -221,9 +253,12 @@ body {
     pre {
         display: inline-block;
         border-radius: 4px;
-        padding: 10px;
-        margin-bottom: 20px;
-        line-height: 1.5em;
+        // padding: 10px;
+        padding: 0.625rem;
+        // margin-bottom: 20px;
+        margin-bottom: 1.25rem;
+        // line-height: 1.5em;
+        line-height: 1.5rem;
         width: 80%;
         overflow-x: scroll;
         code {
@@ -261,6 +296,43 @@ body {
     }
 }
 
+// THEME VARIANTS
+
+.themeVariant-grayscale {
+
+    .nav-container {
+        background-color: #363636;
+        color: #d6d6d6;
+    }
+
+    .markdown-container {
+        background-color: #d6d6d6;
+        color: #363636;
+    }
+
+    .markdown {
+        h2 {
+            border-color: #6f6f6f;
+        }
+    }
+
+}
+
+.themeVariant-dark {
+
+    .nav-container {
+        background-color: #363636;
+        color: #d6d6d6;
+        border-color: black;
+    }
+
+    .markdown-container {
+        background-color: #292929;
+        color: #f3f3f3;
+    }
+
+}
+
 /* ******************************************************************************** */
-/* ABOUT end */
+/* DOCS end */
 /* ******************************************************************************** */

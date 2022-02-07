@@ -1,6 +1,10 @@
 {
     "title": "nanodocs",
-    "theme": "default",
+    "theme": {
+        "name": "default",
+        "variant": "grayscale",
+        "fontSize": "regular"
+    },
     "copyThemeAssets": true,
     "docs": [
         

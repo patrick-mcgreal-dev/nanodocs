@@ -24,17 +24,22 @@ function main() {
         const buildDir = path.join(nanodocsDir, 'build');
         ssg.checkDirExists(buildDir);
 
-        const customTheme = THEMES.indexOf(CONFIG.theme) == -1;
+        const customTheme = THEMES.indexOf(CONFIG.theme.name) == -1;
         const themeDir = customTheme 
-            ? path.join(WORKING_DIR, 'themes', CONFIG.theme)
-            : path.join(MODULE_DIR, 'themes', CONFIG.theme);
+            ? path.join(WORKING_DIR, 'themes', CONFIG.theme.name)
+            : path.join(MODULE_DIR, 'themes', CONFIG.theme.name);
 
         ssg.checkDirExists(themeDir);
+
+        const fontClass = 'fontSize-' + CONFIG.theme.fontSize;
+        const themeVariantClass = 'themeVariant-' + CONFIG.theme.variant;
 
         const docsData = {
             title: CONFIG.title,
             docTree: getDocTree(documentationDir, CONFIG.docs),
-            anchorSeparator: ANCHOR_SEPARATOR
+            anchorSeparator: ANCHOR_SEPARATOR,
+            fontClasses: fontClass,
+            themeVariantClasses: themeVariantClass
         }
 
         ssg.renderPage(path.join(themeDir, 'docs.ejs'), path.join(buildDir, 'index.html'), docsData);
