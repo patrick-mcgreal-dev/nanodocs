@@ -121,6 +121,15 @@ body {
     }
 }
 
+.nav-toggle {
+    display: none;
+    align-items: center;
+
+    &.open {
+        display: flex;
+    }
+}
+
 // TEXT
 
 .markdown-container {
@@ -284,7 +293,9 @@ body {
         padding: 12px;
     }
     .nav-headerIcon {
-        display: block;
+        &.open {
+            display: flex;
+        }
     }
     .nav-menu {
         display: none;

@@ -56,21 +56,17 @@ function switchDoc(path) {
 
 function toggleMenu() {
 
-    const menu = document.querySelector('.nav-menu');
-    toggleElement(menu);
-
-    const menuIcon = document.querySelector('.nav-headerIcon');
-    menuIcon.src = menuIcon.getAttribute('src') == icons.menu ? icons.close : icons.menu;
+    toggleElement(document.querySelector('.nav-menu'));
+    toggleElement(document.getElementById('navExpandIcon'));
+    toggleElement(document.getElementById('navCollapseIcon'));
 
 }
 
 function toggleSubMenu(folderHeader) {
 
-    const submenu = document.getElementById('subMenu_' + folderHeader);
-    toggleElement(submenu);
-
-    const submenuIcon = document.getElementById('subMenuIcon_' + folderHeader);
-    submenuIcon.src = submenuIcon.getAttribute('src') == icons.more ? icons.less : icons.more;
+    toggleElement(document.getElementById('subMenu_' + folderHeader));
+    toggleElement(document.getElementById('subMenuExpandIcon_' + folderHeader));
+    toggleElement(document.getElementById('subMenuCollapseIcon_' + folderHeader));
 
 }
 
