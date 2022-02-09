@@ -6,6 +6,10 @@
 
 // FONT SIZING
 
+.fontSize-small {
+    font-size: 80%;
+}
+
 .fontSize-regular {
     font-size: 90%;
 }
@@ -340,6 +344,16 @@ body {
     .markdown-container {
         background-color: #292929;
         color: #f3f3f3;
+    }
+
+    .markdown {
+        a {
+            color: #8ac1ff;
+        }
+        pre, code {
+            background-color: black;
+            color: white;
+        }
     }
 
 }
