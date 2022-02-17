@@ -1,5 +1,7 @@
 <script>
 
+let currentFontSize = 100;
+
 const anchorSeparator = '<%= anchorSeparator %>';
 
 const icons = {
@@ -9,6 +11,7 @@ const icons = {
     close: 'assets/images/close_black_24dp.svg',
 }
 
+themeInit();
 switchDoc(location.hash);
 
 window.onhashchange = () => {
@@ -89,6 +92,25 @@ function openElement(element) {
 
 function closeElement(element) {
     element.classList.remove('open');
+}
+
+function themeInit() {
+    let rules = document.styleSheets[0].cssRules;
+
+    for (let rule of rules) {
+        if (rule.selectorText != '.fontSize-regular') {
+            continue;
+        }
+        currentFontSize = parseInt(rule.style.fontSize.replace('%', ''));
+        break;
+    }
+}
+
+function themeFontResize(inc) {
+    if (inc > 0 && currentFontSize >= 150) return;
+    if (inc < 0 && currentFontSize <= 50) return;
+    currentFontSize += inc;
+    document.documentElement.style.fontSize = currentFontSize.toString() + '%';
 }
 
 </script>

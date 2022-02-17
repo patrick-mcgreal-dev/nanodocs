@@ -56,6 +56,11 @@
             </div>
         </nav>
         <div class="markdown-container">
+            <div class="markdown-settings">
+                <span><%- include("assets/images/palette_black_24dp.svg") %></span>
+                <span onclick="themeFontResize(10)"><%- include("assets/images/text_increase_black_24dp.svg") %></span>
+                <span onclick="themeFontResize(-10)"><%- include("assets/images/text_decrease_black_24dp.svg") %></span>
+            </div>
             <% for (let item of docTree) { %>
                 <% if (item.type == 'file') { %>
                     <div class="markdown" id="<%= item.id %>">
