@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const resolvePkg = require('resolve-package-path');
 const ssg = require('../lib/nano-ssg');
+const csso = require('csso');
 
 const THEMES = [ 'default' ];
 let ANCHOR_SEPARATOR;
@@ -31,19 +32,20 @@ function main() {
 
         ssg.checkDirExists(themeDir);
 
+        const css = csso.minify(ssg.compileStyle(path.join(themeDir, 'stylesheets', 'docs.scss'))).css;
         const fontClass = 'fontSize-' + CONFIG.theme.fontSize;
         const themeVariantClass = 'themeVariant-' + CONFIG.theme.variant;
 
         const docsData = {
             title: CONFIG.title,
             docTree: getDocTree(documentationDir, CONFIG.docs),
+            css: css,
             anchorSeparator: ANCHOR_SEPARATOR,
             fontClass: fontClass,
             themeVariantClasses: themeVariantClass
         }
 
         ssg.renderPage(path.join(themeDir, 'docs.ejs'), path.join(buildDir, 'index.html'), docsData);
-        ssg.renderStyle(path.join(themeDir, 'stylesheets', 'docs.scss'), path.join(buildDir, 'index.css'));
 
         if (CONFIG.copyThemeAssets) {
 
