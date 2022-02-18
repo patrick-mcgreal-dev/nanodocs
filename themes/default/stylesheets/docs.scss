@@ -146,7 +146,7 @@ body {
     overflow-y: scroll;
 }
 
-.markdown-settings {
+.markdown-topBar {
     position: fixed;
     width: 100%;
 
@@ -164,7 +164,7 @@ body {
     }
 }
 
-.theme-menu {
+.markdown-menu {
 
     display: none;
     position: absolute;
@@ -194,7 +194,7 @@ body {
 
 }
 
-.theme-menuItem {
+.markdown-menuItem {
     &:hover {
         cursor: pointer;
     }
@@ -364,7 +364,7 @@ body {
         margin-left: 12px;
         margin-right: 12px;
     }
-    .markdown-settings {
+    .markdown-topBar {
         padding: 7px 18px;
     }
     .markdown {
@@ -381,11 +381,11 @@ body {
         border-color: lightgrey;
     }
 
-    .markdown-settings {
+    .markdown-topBar {
         background-color: white;
     }
 
-    .theme-menu {
+    .markdown-menu {
         background-color: #f7f5f5;
     }
 
@@ -410,11 +410,11 @@ body {
         color: #d6d6d6;
     }
 
-    .markdown-settings {
+    .markdown-topBar {
         background-color: #d6d6d6;
     }
 
-    .theme-menu {
+    .markdown-menu {
         background-color: #302a2a;
         border-color: black;
         color: white;
@@ -447,11 +447,11 @@ body {
         border-color: black;
     }
 
-    .markdown-settings {
+    .markdown-topBar {
         background-color: #292929;
     }
 
-    .theme-menu {
+    .markdown-menu {
         background-color: #302a2a;
         color: white;
     }

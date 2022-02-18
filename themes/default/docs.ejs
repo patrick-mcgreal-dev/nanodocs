@@ -56,22 +56,24 @@
             </div>
         </nav>
         <div class="markdown-container">
-            <div class="markdown-settings">
-                <span id="theme-menuButton">
+            <div class="markdown-topBar">
+                <span id="markdown-menuButton">
                     <%- include("assets/images/settings_black_24dp.svg") %>
                 </span>
-                <div class="theme-menu" id="theme-menu">
+                <div class="markdown-menu" id="markdown-menu">
                     <div>
-                        <span class="theme-menuItem" onclick="themeFontResize(10)"><%- include("assets/images/text_increase_black_24dp.svg") %></span>
-                        <span class="theme-menuItem" onclick="themeFontResize(-10)"><%- include("assets/images/text_decrease_black_24dp.svg") %></span>
+                        <span class="markdown-menuItem" onclick="themeFontResize(10)"><%- include("assets/images/text_increase_black_24dp.svg") %></span>
+                        <span class="markdown-menuItem" onclick="themeFontResize(-10)"><%- include("assets/images/text_decrease_black_24dp.svg") %></span>
                     </div>
                     <div>
-                        <span class="theme-menuItem" onclick="themeChange('light')">Light</span>
-                        <span class="theme-menuItem" onclick="themeChange('mid')">Mid</span>
-                        <span class="theme-menuItem" onclick="themeChange('dark')">Dark</span>
+                        <span class="markdown-menuItem" onclick="themeChange('light')">Light</span>
+                        <span class="markdown-menuItem" onclick="themeChange('mid')">Mid</span>
+                        <span class="markdown-menuItem" onclick="themeChange('dark')">Dark</span>
                     </div>
                 </div>
-                <span><%- include("assets/images/download_black_24dp.svg") %></span>
+                <span id="markdown-menuButton">
+                    <%- include("assets/images/download_black_24dp.svg") %>
+                </span>
             </div>
             <% for (let item of docTree) { %>
                 <% if (item.type == 'file') { %>

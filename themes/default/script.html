@@ -101,15 +101,15 @@ function themeInit() {
     // theme menu
 
     document.onclick = (e) => {
-        closeElement(document.getElementById('theme-menu'));
+        closeElement(document.getElementById('markdown-menu'));
     };
 
-    document.getElementById('theme-menuButton').onclick = (e) => {
+    document.getElementById('markdown-menuButton').onclick = (e) => {
         e.cancelBubble = true;
-        toggleElement(document.getElementById('theme-menu'));
+        toggleElement(document.getElementById('markdown-menu'));
     };
 
-    document.getElementById('theme-menu').onclick = (e) => {
+    document.getElementById('markdown-menu').onclick = (e) => {
         e.cancelBubble = true;
     };
 
