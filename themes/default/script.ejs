@@ -1,5 +1,7 @@
 <script>
 
+let lastDocAnchor = '';
+let fontClass = '<%= fontClass %>';
 let currentFontSize = 100;
 
 const anchorSeparator = '<%= anchorSeparator %>';
@@ -35,28 +37,26 @@ function switchDoc(path) {
     let docAnchor = folderAnchor.concat(anchorSeparator, fileAnchor);
     let headerAnchor = anchors.length == 3 ? anchors[2] : null;
 
-    let docs = document.getElementsByClassName('markdown');
+    if (lastDocAnchor) {
+        closeElement(document.getElementById(lastDocAnchor));
+        closeElement(document.getElementById('navItemContainer_' + lastDocAnchor));
+    }
 
-    for (let doc of docs) {
+    let doc = document.getElementById(docAnchor)
+    openElement(doc);
+    openElement(document.getElementById('navItemContainer_' + docAnchor));
 
-        if (doc.id != docAnchor) {
-            closeElement(doc);
-            closeElement(document.getElementById('navItemContainer_' + doc.id));
-        } else {
-            openElement(doc);
-            openElement(document.getElementById('navItemContainer_' + doc.id));
-            if (headerAnchor) {
-                document.getElementsByName(path)[0].scrollIntoView();
-            } else {
-                doc.parentElement.scrollTop = 0;
-            }
-        }
-
+    if (headerAnchor) {
+        document.getElementsByName(path)[0].scrollIntoView();
+    } else {
+        doc.parentElement.scrollTop = 0;
     }
 
     if (folderAnchor != 'root') {
         openSubMenu(folderAnchor);
     }
+
+    lastDocAnchor = docAnchor;
 }
 
 function toggleMenu() {
@@ -118,7 +118,7 @@ function themeInit() {
     let rules = document.styleSheets[0].cssRules;
 
     for (let rule of rules) {
-        if (rule.selectorText != '.fontSize-regular') {
+        if (!rule.selectorText.includes(fontClass)) {
             continue;
         }
         currentFontSize = parseInt(rule.style.fontSize.replace('%', ''));

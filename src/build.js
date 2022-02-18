@@ -38,7 +38,7 @@ function main() {
             title: CONFIG.title,
             docTree: getDocTree(documentationDir, CONFIG.docs),
             anchorSeparator: ANCHOR_SEPARATOR,
-            fontClasses: fontClass,
+            fontClass: fontClass,
             themeVariantClasses: themeVariantClass
         }
 

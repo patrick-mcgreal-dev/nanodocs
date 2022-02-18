@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="<%= fontClasses %>">
+<html lang="en" class="<%= fontClass %>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,6 +90,6 @@
             <% } %>
         </div>
     </div>
-    <%- include('script.html') %>
+    <%- include('script.ejs', { fontClass: fontClass }) %>
 </body>
 </html>
