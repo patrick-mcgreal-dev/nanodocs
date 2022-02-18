@@ -11,6 +11,8 @@ const icons = {
     close: 'assets/images/close_black_24dp.svg',
 }
 
+const themes = ['light', 'mid', 'dark'];
+
 themeInit();
 switchDoc(location.hash);
 
@@ -95,6 +97,24 @@ function closeElement(element) {
 }
 
 function themeInit() {
+
+    // theme menu
+
+    document.onclick = (e) => {
+        closeElement(document.getElementById('theme-menu'));
+    };
+
+    document.getElementById('theme-menuButton').onclick = (e) => {
+        e.cancelBubble = true;
+        toggleElement(document.getElementById('theme-menu'));
+    };
+
+    document.getElementById('theme-menu').onclick = (e) => {
+        e.cancelBubble = true;
+    };
+
+    // font sizing
+
     let rules = document.styleSheets[0].cssRules;
 
     for (let rule of rules) {
@@ -111,6 +131,18 @@ function themeFontResize(inc) {
     if (inc < 0 && currentFontSize <= 50) return;
     currentFontSize += inc;
     document.documentElement.style.fontSize = currentFontSize.toString() + '%';
+}
+
+function themeChange(name) {
+
+    let container = document.getElementById('container');
+
+    for (let theme of themes) {
+        container.classList.remove('themeVariant-' + theme);
+    }
+
+    container.classList.add('themeVariant-' + name);
+
 }
 
 </script>

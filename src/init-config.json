@@ -2,7 +2,7 @@
     "title": "nanodocs",
     "theme": {
         "name": "default",
-        "variant": "grayscale",
+        "variant": "mid",
         "fontSize": "regular"
     },
     "copyThemeAssets": true,
