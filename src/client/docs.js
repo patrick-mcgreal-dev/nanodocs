@@ -167,8 +167,10 @@ function download() {
 
     const page = document.documentElement.outerHTML.toString();
 
-    if (lastDocAnchor)
+    if (lastDocAnchor) {
         openElement(document.getElementById(lastDocAnchor));
+        openElement(document.getElementById('navItemContainer_' + lastDocAnchor));
+    }
 
     if (lastFolderAnchor != 'root')
         openSubMenu(lastFolderAnchor);
