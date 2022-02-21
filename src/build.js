@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const resolvePkg = require('resolve-package-path');
+
 const ssg = require('../lib/nano-ssg');
 const csso = require('csso');
 
@@ -33,6 +34,7 @@ function main() {
         ssg.checkDirExists(themeDir);
 
         const css = csso.minify(ssg.compileStyle(path.join(themeDir, 'stylesheets', 'docs.scss'))).css;
+
         const fontClass = 'fontSize-' + CONFIG.theme.fontSize;
         const themeVariantClass = 'themeVariant-' + CONFIG.theme.variant;
 

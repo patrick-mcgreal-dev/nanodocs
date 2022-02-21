@@ -1,7 +1,9 @@
-let fontClass = '<%= fontClass %>';
+const title = '<%= title %>';
 const anchorSeparator = '<%= anchorSeparator %>';
+let fontClass = '<%= fontClass %>';
 
 let lastDocAnchor = '';
+let lastFolderAnchor = '';
 let currentFontSize = 100;
 
 const icons = {
@@ -54,6 +56,7 @@ function switchDoc(path) {
         openSubMenu(folderAnchor);
     }
 
+    lastFolderAnchor = folderAnchor;
     lastDocAnchor = docAnchor;
 }
 
@@ -78,6 +81,15 @@ function openSubMenu(folderHeader) {
     const submenu = document.getElementById('subMenu_' + folderHeader);
 
     if (!submenu.classList.contains('open'))
+        toggleSubMenu(folderHeader);
+
+}
+
+function closeSubMenu(folderHeader) {
+
+    const submenu = document.getElementById('subMenu_' + folderHeader);
+
+    if (submenu.classList.contains('open'))
         toggleSubMenu(folderHeader);
 
 }
@@ -144,9 +156,24 @@ function themeChange(name) {
 }
 
 function download() {
-    // https://www.npmjs.com/package/file-saver
-    const page = document.documentElement.innerHTML.toString();
-    const blob = new Blob([page], { type: 'text/html' });
 
+    if (lastDocAnchor) {
+        closeElement(document.getElementById(lastDocAnchor));
+        closeElement(document.getElementById('navItemContainer_' + lastDocAnchor));
+    }
+
+    if (lastFolderAnchor)
+        closeSubMenu(lastFolderAnchor);
+
+    const page = document.documentElement.outerHTML.toString();
+
+    if (lastDocAnchor)
+        openElement(document.getElementById(lastDocAnchor));
+
+    if (lastFolderAnchor)
+        openSubMenu(lastFolderAnchor);
+
+    const blob = new Blob([page], { type: 'text/html' });
+    saveAs(blob, title);
     
 }
