@@ -71,9 +71,11 @@
                         <span class="markdown-menuItem" onclick="themeChange('dark')">Dark</span>
                     </div>
                 </div>
-                <span id="markdown-menuButton" onclick="download()">
-                    <%- include("assets/images/download_black_24dp.svg") %>
-                </span>
+                <% if (downloadEnabled) { %>
+                    <span id="markdown-menuButton" onclick="download()">
+                        <%- include("assets/images/download_black_24dp.svg") %>
+                    </span>
+                <% } %>
             </div>
             <% for (let item of docTree) { %>
                 <% if (item.type == 'file') { %>

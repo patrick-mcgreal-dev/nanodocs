@@ -162,7 +162,7 @@ function download() {
         closeElement(document.getElementById('navItemContainer_' + lastDocAnchor));
     }
 
-    if (lastFolderAnchor)
+    if (lastFolderAnchor != 'root')
         closeSubMenu(lastFolderAnchor);
 
     const page = document.documentElement.outerHTML.toString();
@@ -170,7 +170,7 @@ function download() {
     if (lastDocAnchor)
         openElement(document.getElementById(lastDocAnchor));
 
-    if (lastFolderAnchor)
+    if (lastFolderAnchor != 'root')
         openSubMenu(lastFolderAnchor);
 
     const blob = new Blob([page], { type: 'text/html' });

@@ -44,7 +44,8 @@ function main() {
             css: css,
             anchorSeparator: ANCHOR_SEPARATOR,
             fontClass: fontClass,
-            themeVariantClasses: themeVariantClass
+            themeVariantClasses: themeVariantClass,
+            downloadEnabled: CONFIG.downloadEnabled
         }
 
         ssg.renderPage(path.join(themeDir, 'docs.ejs'), path.join(buildDir, 'index.html'), docsData);

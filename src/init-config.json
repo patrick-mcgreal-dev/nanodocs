@@ -5,6 +5,7 @@
         "variant": "mid",
         "fontSize": "regular"
     },
+    "downloadEnabled": true,
     "copyThemeAssets": true,
     "docs": [
         
