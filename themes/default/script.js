@@ -1,10 +1,8 @@
-<script>
+let fontClass = '<%= fontClass %>';
+const anchorSeparator = '<%= anchorSeparator %>';
 
 let lastDocAnchor = '';
-let fontClass = '<%= fontClass %>';
 let currentFontSize = 100;
-
-const anchorSeparator = '<%= anchorSeparator %>';
 
 const icons = {
     more: 'assets/images/expand_more_black_24dp.svg',
@@ -145,4 +143,10 @@ function themeChange(name) {
 
 }
 
-</script>
+function download() {
+    // https://www.npmjs.com/package/file-saver
+    const page = document.documentElement.innerHTML.toString();
+    const blob = new Blob([page], { type: 'text/html' });
+
+    
+}
