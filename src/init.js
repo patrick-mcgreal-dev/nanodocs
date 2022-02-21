@@ -6,22 +6,22 @@ function main() {
 
     try {
     
-        const WORKING_DIR = process.cwd();
-        const NANODOCS_DIR = path.join(WORKING_DIR, 'nanodocs');
-        const MODULE_DIR = path.join(resolvePkg('nanodocs', WORKING_DIR), '../');
+        const dirWorking = process.cwd();
+        const dirNanodocs = path.join(dirWorking, 'nanodocs');
+        const dirModule = path.join(resolvePkg('nanodocs', dirWorking), '../');
 
-        if (fs.existsSync(NANODOCS_DIR)) {
+        if (fs.existsSync(dirNanodocs)) {
             return {
                 error: true,
                 message: 'There is already a folder called \'nanodocs\' in the working directory. Please remove this folder before trying again.' 
             };
         }
 
-        fs.mkdirSync(NANODOCS_DIR);
-        fs.mkdirSync(path.join(NANODOCS_DIR, 'documentation'));
-        fs.mkdirSync(path.join(NANODOCS_DIR, 'themes'));
-        fs.mkdirSync(path.join(NANODOCS_DIR, 'build'));
-        fs.copyFileSync(path.join(MODULE_DIR, 'src', 'init-config.json'), path.join(NANODOCS_DIR, 'config.json'));
+        fs.mkdirSync(dirNanodocs);
+        fs.mkdirSync(path.join(dirNanodocs, 'documentation'));
+        fs.mkdirSync(path.join(dirNanodocs, 'themes'));
+        fs.mkdirSync(path.join(dirNanodocs, 'build'));
+        fs.copyFileSync(path.join(dirModule, 'src', 'init-config.json'), path.join(dirNanodocs, 'config.json'));
 
         return {
             error: false,
