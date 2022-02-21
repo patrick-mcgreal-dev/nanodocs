@@ -4,27 +4,27 @@ const chalk = require('chalk');
 const { init } = require('./init.js');
 const { build } = require('./build.js');
 
-const ARGS = process.argv;
-const COMMANDS = [ 'init', 'build' ];
+const args = process.argv;
+const commands = [ 'init', 'build' ];
 
-if (ARGS.length < 3) {
+if (args.length < 3) {
     usage();
     return;
 }
 
-if (ARGS.length > 3) {
+if (args.length > 3) {
     logError('nanodocs only accepts a single argument');
     usage();
     return;
 }
 
-if (COMMANDS.indexOf(ARGS[2]) == -1) {
-    logError(`'${ARGS[2]}' is not a valid nanodocs command`);
+if (commands.indexOf(args[2]) == -1) {
+    logError(`'${args[2]}' is not a valid nanodocs command`);
     usage();
     return;
 }
 
-switch (ARGS[2]) {
+switch (args[2]) {
     case 'init': runProcess(init); break;
     case 'build': runProcess(build); break;
     default: usage(); break;
@@ -37,7 +37,7 @@ nanodocs is a tool for generating online documentation.
 Usage: 
     nanodocs <command>
 
-    valid COMMANDS:
+    valid commands:
 
     init: initialise nanodocs in the working directory
     build: build documentation to the nanodocs/build folder
@@ -56,8 +56,8 @@ function logSuccess(message) {
     console.log(log);
 }
 
-function runProcess(func) {
-    const response = func();
+function runProcess(procFunction) {
+    const response = procFunction();
     if (response.error) {
         logError(response.message);
     } else {
