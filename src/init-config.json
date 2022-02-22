@@ -1,12 +1,11 @@
 {
-    "title": "nanodocs",
+    "title": "",
     "theme": {
         "name": "default",
         "variant": "mid",
-        "fontSize": "regular"
+        "fontSize": "small"
     },
     "downloadEnabled": true,
-    "copyThemeAssets": true,
     "docs": [
         
     ]
