@@ -2,65 +2,64 @@ const path = require('path');
 const fs = require('fs-extra');
 const resolvePkg = require('resolve-package-path');
 
-const ssg = require('../lib/nano-ssg');
+const ejs = require('ejs');
+const sass = require('sass');
 const csso = require('csso');
+const marked = require('marked');
 
-const THEMES = [ 'default' ];
-let ANCHOR_SEPARATOR;
+const themes = [ 'default' ];
+const anchorSeparator = '+';
 
 function main() {
 
     try {
 
-        const WORKING_DIR = process.cwd();
-        const MODULE_DIR = path.join(resolvePkg('nanodocs', WORKING_DIR), '../');
-        const CONFIG = require(path.join(WORKING_DIR, 'nanodocs', 'config.json'));
+        // get user directories
 
-        ANCHOR_SEPARATOR = CONFIG.anchorSeparator ?? '+';
+        const dirWorking = process.cwd();
+        const dirModule = path.join(resolvePkg('nanodocs', dirWorking), '../');
 
-        const nanodocsDir = path.join(WORKING_DIR, 'nanodocs');
+        // get/check nanodocs directories
 
-        const documentationDir = path.join(nanodocsDir, 'documentation');
-        ssg.checkDirExists(documentationDir);
+        const dirNanodocs = path.join(dirWorking, 'nanodocs');
+        checkDirExists(dirNanodocs);
 
-        const buildDir = path.join(nanodocsDir, 'build');
-        ssg.checkDirExists(buildDir);
+        const dirDocumentation = path.join(dirNanodocs, 'documentation');
+        checkDirExists(dirDocumentation);
 
-        const customTheme = THEMES.indexOf(CONFIG.theme.name) == -1;
+        const dirBuild = path.join(dirNanodocs, 'build');
+        checkDirExists(dirBuild);
+
+        // get config
+
+        const config = require(path.join(dirWorking, 'nanodocs', 'config.json'));
+
+        // get/check theme directory
+
+        const customTheme = themes.indexOf(config.theme.name) == -1;
         const themeDir = customTheme 
-            ? path.join(WORKING_DIR, 'themes', CONFIG.theme.name)
-            : path.join(MODULE_DIR, 'themes', CONFIG.theme.name);
+            ? path.join(dirWorking, 'themes', config.theme.name)
+            : path.join(dirModule, 'themes', config.theme.name);
 
-        ssg.checkDirExists(themeDir);
+        checkDirExists(themeDir);
 
-        const css = csso.minify(ssg.compileStyle(path.join(themeDir, 'stylesheets', 'docs.scss'))).css;
+        // render page
 
-        const fontClass = 'fontSize-' + CONFIG.theme.fontSize;
-        const themeVariantClass = 'themeVariant-' + CONFIG.theme.variant;
+        const appData = {
 
-        const docsData = {
-            title: CONFIG.title,
-            docTree: getDocTree(documentationDir, CONFIG.docs),
-            css: css,
-            anchorSeparator: ANCHOR_SEPARATOR,
-            fontClass: fontClass,
-            themeVariantClasses: themeVariantClass,
-            downloadEnabled: CONFIG.downloadEnabled
-        }
+            docTree: getDocTree(dirDocumentation, config.docs),
 
-        ssg.renderPage(path.join(themeDir, 'docs.ejs'), path.join(buildDir, 'index.html'), docsData);
+            title: config.title,
+            downloadEnabled: config.downloadEnabled,
+            anchorSeparator: anchorSeparator,
 
-        if (CONFIG.copyThemeAssets) {
+            css: csso.minify(sass.compile(path.join(themeDir, 'stylesheets', 'docs.scss')).css).css,
+            fontClass: 'fontSize-' + config.theme.fontSize,
+            themeVariantClasses: 'themeVariant-' + config.theme.variant,
 
-            const assetsSrcDir = path.join(themeDir, 'assets');
-            ssg.checkDirExists(assetsSrcDir);
+        };
 
-            const assetsDestDir = path.join(buildDir, 'assets');
-
-            fs.rmSync(assetsDestDir, { recursive: true, force: true });
-            fs.copySync(assetsSrcDir, assetsDestDir, { overwrite: true });
-    
-        }
+        renderPage(path.join(themeDir, 'docs.ejs'), path.join(dirBuild, 'index.html'), appData);
 
         return {
             error: false,
@@ -84,31 +83,30 @@ function getDocTree(dir, docStructure, folderName) {
 
     for (let item of docStructure) {
 
-        let isParent = typeof item != 'string';
+        const isFolder = typeof item != 'string';
 
-        if (isParent) {
+        if (isFolder) {
 
-            let folderPath = path.join(dir, item.folder);
-            ssg.checkDirExists(folderPath, `Can't find a folder called "${item.folder}" in directory "${dir}". Please create this folder or remove it from your config.json.`);
+            const dirFolder = path.join(dir, item.folder);
+            checkDirExists(dirFolder, `Can't find a folder called "${item.folder}" in directory "${dir}". Please create this folder or remove it from your config.json.`);
 
             tree.push({
                 type: 'folder',
                 header: escapeLinkText(item.folder),
-                files: getDocTree(folderPath, item.files, item.folder)
+                files: getDocTree(dirFolder, item.files, item.folder)
             });
 
         } else {
 
-            let filePath = path.join(dir, item + '.md');
-            ssg.checkDirExists(filePath, `Can't find a file called "${item + '.md'}" in directory "${dir}". Please create this file or remove it from your config.json.`);
-
-            let tokens = ssg.tokenizeMarkdown(filePath);
-            let header = tokens.find(t => t.type == 'heading' && t.depth == 1);
+            const pathFile = path.join(dir, item + '.md');
+            checkDirExists(pathFile, `Can't find a file called "${item + '.md'}" in directory "${dir}". Please create this file or remove it from your config.json.`);
 
             folderName = folderName ?? 'root';
-            let anchor = escapeLinkText(folderName).concat(ANCHOR_SEPARATOR, escapeLinkText(header.text));
+            const tokens = tokenizeMarkdown(pathFile);
+            const header = tokens.find(t => t.type == 'heading' && t.depth == 1);
 
-            let content = ssg.parseMarkdown(filePath, getMarkedRenderer(anchor));
+            const anchor = escapeLinkText(folderName).concat(anchorSeparator, escapeLinkText(header.text));
+            const content = parseMarkdown(pathFile, getMarkedRenderer(anchor));
 
             tree.push({
                 type: 'file',
@@ -125,6 +123,38 @@ function getDocTree(dir, docStructure, folderName) {
 
 }
 
+// ejs functions
+
+function renderPage (sourceDir, destDir, data) {
+    
+    ejs.renderFile(sourceDir, data, (err, str) => {
+            
+        if (err != undefined) throw err;
+
+        fs.writeFileSync(destDir, str);
+
+    });
+
+}
+
+// markdown functions
+
+function tokenizeMarkdown (srcDir) {
+
+    let markdown = fs.readFileSync(srcDir, 'utf8');
+    return marked.lexer(markdown);
+
+}
+
+function parseMarkdown (srcDir, renderer) {
+
+    marked.use({ renderer });
+
+    let markdown = fs.readFileSync(srcDir, 'utf8');
+    return marked.parse(markdown);
+
+}
+
 function getMarkedRenderer(fileAnchor) {
 
     return {
@@ -132,7 +162,7 @@ function getMarkedRenderer(fileAnchor) {
             if (level == 1) {
                 return `<h${level} name="${fileAnchor}">${text}</h${level}>`;
             } else {
-                let headerAnchor = fileAnchor ? fileAnchor.concat(ANCHOR_SEPARATOR, escapeLinkText(text)) : escapeLinkText(text);
+                let headerAnchor = fileAnchor ? fileAnchor.concat(anchorSeparator, escapeLinkText(text)) : escapeLinkText(text);
                 return `<h${level} name="${headerAnchor}">${text}</h${level}>`;
             }
         }   
@@ -140,11 +170,21 @@ function getMarkedRenderer(fileAnchor) {
     
 }
 
+// util functions
+
+function checkDirExists (dir) {
+
+    if (!fs.existsSync(dir)) {
+        throw new Error(`directory "${dir}" does not exist`);
+    }
+
+}
+
 function escapeLinkText(input) {
     return input
         .toLowerCase()
-        .replace(/[^\w]/g, '-')
-        .replace(/\-$/g, '');
+        .replace(/[^\w]/g, '-') // replace spaces with dashes
+        .replace(/\-$/g, ''); // remove trailing dashes at the end of the string
 }
 
 module.exports = {
