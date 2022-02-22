@@ -1,19 +1,13 @@
 const title = '<%= title %>';
 const anchorSeparator = '<%= anchorSeparator %>';
-let fontClass = '<%= fontClass %>';
+const fontClass = '<%= fontClass %>';
+
+const themeVariants = ['light', 'mid', 'dark'];
+
+let currentFontSize = 100;
 
 let lastDocAnchor = '';
 let lastFolderAnchor = '';
-let currentFontSize = 100;
-
-const icons = {
-    more: 'assets/images/expand_more_black_24dp.svg',
-    less: 'assets/images/expand_less_black_24dp.svg',
-    menu: 'assets/images/menu_book_black_24dp.svg',
-    close: 'assets/images/close_black_24dp.svg',
-}
-
-const themes = ['light', 'mid', 'dark'];
 
 themeInit();
 switchDoc(location.hash);
@@ -31,18 +25,18 @@ function switchDoc(path) {
 
     path = path.replace(/\#/g, '');
 
-    let anchors = path.split(anchorSeparator);
-    let folderAnchor = anchors[0];
-    let fileAnchor = anchors[1];
-    let docAnchor = folderAnchor.concat(anchorSeparator, fileAnchor);
-    let headerAnchor = anchors.length == 3 ? anchors[2] : null;
+    const anchors = path.split(anchorSeparator);
+    const folderAnchor = anchors[0];
+    const fileAnchor = anchors[1];
+    const docAnchor = folderAnchor.concat(anchorSeparator, fileAnchor);
+    const headerAnchor = anchors.length == 3 ? anchors[2] : null;
 
     if (lastDocAnchor) {
         closeElement(document.getElementById(lastDocAnchor));
         closeElement(document.getElementById('navItemContainer_' + lastDocAnchor));
     }
 
-    let doc = document.getElementById(docAnchor)
+    const doc = document.getElementById(docAnchor)
     openElement(doc);
     openElement(document.getElementById('navItemContainer_' + docAnchor));
 
@@ -125,7 +119,7 @@ function themeInit() {
 
     // font sizing
 
-    let rules = document.styleSheets[0].cssRules;
+    const rules = document.styleSheets[0].cssRules;
 
     for (let rule of rules) {
         if (!rule.selectorText.includes(fontClass)) {
@@ -145,9 +139,9 @@ function themeFontResize(inc) {
 
 function themeChange(name) {
 
-    let container = document.getElementById('container');
+    const container = document.getElementById('container');
 
-    for (let theme of themes) {
+    for (let theme of themeVariants) {
         container.classList.remove('themeVariant-' + theme);
     }
 
@@ -164,6 +158,8 @@ function download() {
 
     if (lastFolderAnchor != 'root')
         closeSubMenu(lastFolderAnchor);
+
+    closeElement(document.getElementById('markdown-menu'));
 
     const page = document.documentElement.outerHTML.toString();
 
