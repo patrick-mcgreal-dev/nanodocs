@@ -55,7 +55,7 @@ function main() {
 
             css: csso.minify(sass.compile(path.join(themeDir, 'stylesheets', 'docs.scss')).css).css,
             fontClass: 'fontSize-' + config.theme.fontSize,
-            themeVariantClasses: 'themeVariant-' + config.theme.variant,
+            themeVariantClass: 'themeVariant-' + config.theme.variant,
 
         };
 
