@@ -19,7 +19,6 @@ function main() {
 
         fs.mkdirSync(dirNanodocs);
         fs.mkdirSync(path.join(dirNanodocs, 'documentation'));
-        fs.mkdirSync(path.join(dirNanodocs, 'themes'));
         fs.mkdirSync(path.join(dirNanodocs, 'build'));
         fs.copyFileSync(path.join(dirModule, 'src', 'init-config.json'), path.join(dirNanodocs, 'config.json'));
 
