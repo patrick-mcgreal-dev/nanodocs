@@ -1,0 +1,101 @@
+// THEME VARIANTS
+// ====================================
+
+.themeVariant-light {
+    
+    .nav-container {
+        background-color: #f7f5f5;
+        border-color: lightgrey;
+    }
+
+    .markdown-topBar {
+        background-color: white;
+    }
+
+    .markdown-menu {
+        background-color: #f7f5f5;
+    }
+
+    .markdown {
+        h2 {
+            border-color: lightgrey;
+        }
+        a {
+            color: #0366d6;
+        }
+        code, pre {
+            background-color: #efefef;
+        }
+    }
+
+}
+
+.themeVariant-mid {
+
+    .nav-container {
+        background-color: #302a2a;
+        color: #d6d6d6;
+    }
+
+    .markdown-topBar {
+        background-color: #d6d6d6;
+    }
+
+    .markdown-menu {
+        background-color: #302a2a;
+        border-color: black;
+        color: white;
+    }
+
+    .markdown-container {
+        background-color: #d6d6d6;
+        color: #363636;
+    }
+
+    .markdown {
+        h2 {
+            border-color: #6f6f6f;
+        }
+        a {
+            color: #0366d6;
+        }
+        code, pre {
+            background-color: #efefef;
+        }
+    }
+
+}
+
+.themeVariant-dark {
+
+    .nav-container {
+        background-color: #363636;
+        color: #d6d6d6;
+        border-color: black;
+    }
+
+    .markdown-topBar {
+        background-color: #292929;
+    }
+
+    .markdown-menu {
+        background-color: #302a2a;
+        color: white;
+    }
+
+    .markdown-container {
+        background-color: #292929;
+        color: #f3f3f3;
+    }
+
+    .markdown {
+        a {
+            color: #8ac1ff;
+        }
+        pre, code {
+            background-color: black;
+            color: white;
+        }
+    }
+
+}
