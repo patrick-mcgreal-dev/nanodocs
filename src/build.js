@@ -11,6 +11,7 @@ const themes = [ 'default' ];
 const anchorSeparator = '+';
 
 let config;
+let dirAssets;
 
 function main() {
 
@@ -26,8 +27,11 @@ function main() {
         const dirNanodocs = path.join(dirWorking, 'nanodocs');
         checkDirExists(dirNanodocs);
 
-        const dirDocumentation = path.join(dirNanodocs, 'documentation');
+        const dirDocumentation = path.join(dirNanodocs, 'contents', 'documentation');
         checkDirExists(dirDocumentation);
+
+        dirAssets = path.join(dirNanodocs, 'contents', 'assets');
+        checkDirExists(dirAssets);
 
         const dirBuild = path.join(dirNanodocs, 'build');
         checkDirExists(dirBuild);
@@ -108,7 +112,11 @@ function getDocTree(dir, docStructure, folderName) {
             const header = tokens.find(t => t.type == 'heading' && t.depth == 1);
 
             const anchor = escapeLinkText(folderName).concat(anchorSeparator, escapeLinkText(header.text));
-            const content = parseMarkdown(pathFile, getMarkedRenderer(anchor, { linkIcon: config.linkIcons }));
+            const content = parseMarkdown(pathFile, getMarkedRenderer({ 
+                fileAnchor: anchor, 
+                linkIcons: config.linkIcons,
+                inlineImages: config.inlineImages
+            }));
 
             tree.push({
                 type: 'file',
@@ -156,43 +164,59 @@ function parseMarkdown (srcDir, renderer) {
 
 }
 
-function getMarkedRenderer(fileAnchor, options) {
+function getMarkedRenderer(options) {
 
-    return {
-        heading(text, level) {
+    const customHeading = (text, level) => {
 
-            let html = '';
+        let html = '';
 
-            if (level == 1) {
+        if (level == 1) {
 
-                const linkIcon = options.linkIcon ? `<a href="#${fileAnchor}" class="markdown-linkIcon"></a>` : '';
-                html = `<h${level} name="${fileAnchor}">${text}${linkIcon}</h${level}>`;
+            const linkIcon = options.linkIcons ? `<a href="#${options.fileAnchor}" class="markdown-linkIcon"></a>` : '';
+            html = `<h${level} name="${options.fileAnchor}">${text}${linkIcon}</h${level}>`;
 
-            } else if (level == 2) {
+        } else if (level == 2) {
 
-                const headerAnchor = fileAnchor ? fileAnchor.concat(anchorSeparator, escapeLinkText(text)) : escapeLinkText(text);
-                const linkIcon = options.linkIcon ? `<a href="#${headerAnchor}" class="markdown-linkIcon"></a>` : '';
-                html = `<h${level} name="${headerAnchor}">${text}${linkIcon}</h${level}>`;
+            const headerAnchor = options.fileAnchor ? options.fileAnchor.concat(anchorSeparator, escapeLinkText(text)) : escapeLinkText(text);
+            const linkIcon = options.linkIcons ? `<a href="#${headerAnchor}" class="markdown-linkIcon"></a>` : '';
+            html = `<h${level} name="${headerAnchor}">${text}${linkIcon}</h${level}>`;
 
-            } else {
+        } else {
 
-                html = `<h${level}>${text}</h${level}>`;
-
-            }
-
-            return html;
+            html = `<h${level}>${text}</h${level}>`;
 
         }
-    }
+
+        return html;
+
+    };
+
+    const customImage = (href, title, alt) => {
+
+        const dir = path.join(dirAssets, ...href.split('/'));
+        checkDirExists(dir);
+
+        const image = fs.readFileSync(dir, { encoding: 'base64' });
+        
+        const html = `<img src="data:image;base64, ${image}" title="${alt}">`;
+        return html;
+
+    };
+
+    let renderer = {};
+    renderer.heading = customHeading;
+    if (options.inlineImages) { renderer.image = customImage }
+
+    return renderer;
     
 }
 
 // util functions
 
-function checkDirExists (dir) {
+function checkDirExists (path) {
 
-    if (!fs.existsSync(dir)) {
-        throw new Error(`directory "${dir}" does not exist`);
+    if (!fs.existsSync(path)) {
+        throw new Error(`directory or file "${path}" does not exist`);
     }
 
 }
