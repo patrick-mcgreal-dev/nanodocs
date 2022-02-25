@@ -128,6 +128,15 @@ function themeInit() {
         currentFontSize = parseInt(rule.style.fontSize.replace('%', ''));
         break;
     }
+
+    // header link icons
+
+    const linkLocations = document.querySelectorAll('.markdown-linkIcon');
+    const linkIcon = document.getElementById('linkIcon');
+
+    for (let location of linkLocations) {
+        location.innerHTML = linkIcon.innerHTML;
+    }
 }
 
 function themeFontResize(inc) {

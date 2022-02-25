@@ -16,6 +16,16 @@
         background-color: #f7f5f5;
     }
 
+    .markdown-linkIcon {
+        opacity: 15%;
+        &:hover {
+            opacity: inherit;
+        }
+        svg {
+            color: black;
+        }
+    }
+
     .markdown {
         h2 {
             border-color: lightgrey;
@@ -52,6 +62,16 @@
         color: #363636;
     }
 
+    .markdown-linkIcon {
+        opacity: 15%;
+        &:hover {
+            opacity: inherit;
+        }
+        svg {
+            color: black;
+        }
+    }
+
     .markdown {
         h2 {
             border-color: #6f6f6f;
@@ -86,6 +106,16 @@
     .markdown-container {
         background-color: #292929;
         color: #f3f3f3;
+    }
+
+    .markdown-linkIcon {
+        opacity: 40%;
+        &:hover {
+            opacity: inherit;
+        }
+        svg {
+            color: white;
+        }
     }
 
     .markdown {

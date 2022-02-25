@@ -13,10 +13,11 @@
 
     padding: 7px 30px;
     display: flex;
+    z-index: 1; // opacity of anchor links affects stacking order
 
     > span {
         margin-right: 10px;
-        opacity: 0.4;
+        opacity: 40%;
 
         &:hover {
             cursor: pointer;
@@ -61,6 +62,15 @@
     }
 }
 
+.markdown-linkIcon {
+    display: flex;
+    margin-left: 10px;
+    opacity: 15%;
+    &:hover {
+        opacity: 100%;
+    }
+}
+
 .markdown {
     
     display: none;
@@ -70,10 +80,13 @@
 
     padding: 0 30px;
 
+    h1, h2, h3 {
+        display: flex;
+        align-items: center;
+    }
+
     h1 {
         width: 100%;
-
-        display: block;
         margin-bottom: 36px;
 
         font-size: 1.8rem;

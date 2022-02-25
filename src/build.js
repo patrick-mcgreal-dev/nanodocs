@@ -10,6 +10,8 @@ const marked = require('marked');
 const themes = [ 'default' ];
 const anchorSeparator = '+';
 
+let config;
+
 function main() {
 
     try {
@@ -32,7 +34,7 @@ function main() {
 
         // get config
 
-        const config = require(path.join(dirWorking, 'nanodocs', 'config.json'));
+        config = require(path.join(dirWorking, 'nanodocs', 'config.json'));
 
         // get/check theme directory
 
@@ -106,7 +108,7 @@ function getDocTree(dir, docStructure, folderName) {
             const header = tokens.find(t => t.type == 'heading' && t.depth == 1);
 
             const anchor = escapeLinkText(folderName).concat(anchorSeparator, escapeLinkText(header.text));
-            const content = parseMarkdown(pathFile, getMarkedRenderer(anchor));
+            const content = parseMarkdown(pathFile, getMarkedRenderer(anchor, { linkIcon: config.linkIcons }));
 
             tree.push({
                 type: 'file',
@@ -130,7 +132,6 @@ function renderPage (sourceDir, destDir, data) {
     ejs.renderFile(sourceDir, data, (err, str) => {
             
         if (err != undefined) throw err;
-
         fs.writeFileSync(destDir, str);
 
     });
@@ -150,22 +151,38 @@ function parseMarkdown (srcDir, renderer) {
 
     marked.use({ renderer });
 
-    let markdown = fs.readFileSync(srcDir, 'utf8');
-    return marked.parse(markdown);
+    let fileContents = fs.readFileSync(srcDir, 'utf8');
+    return marked.parse(fileContents);
 
 }
 
-function getMarkedRenderer(fileAnchor) {
+function getMarkedRenderer(fileAnchor, options) {
 
     return {
         heading(text, level) {
+
+            let html = '';
+
             if (level == 1) {
-                return `<h${level} name="${fileAnchor}">${text}</h${level}>`;
+
+                const linkIcon = options.linkIcon ? `<a href="#${fileAnchor}" class="markdown-linkIcon"></a>` : '';
+                html = `<h${level} name="${fileAnchor}">${text}${linkIcon}</h${level}>`;
+
+            } else if (level == 2) {
+
+                const headerAnchor = fileAnchor ? fileAnchor.concat(anchorSeparator, escapeLinkText(text)) : escapeLinkText(text);
+                const linkIcon = options.linkIcon ? `<a href="#${headerAnchor}" class="markdown-linkIcon"></a>` : '';
+                html = `<h${level} name="${headerAnchor}">${text}${linkIcon}</h${level}>`;
+
             } else {
-                let headerAnchor = fileAnchor ? fileAnchor.concat(anchorSeparator, escapeLinkText(text)) : escapeLinkText(text);
-                return `<h${level} name="${headerAnchor}">${text}</h${level}>`;
+
+                html = `<h${level}>${text}</h${level}>`;
+
             }
-        }   
+
+            return html;
+
+        }
     }
     
 }

@@ -16,6 +16,10 @@ body {
     height: 100vh;
 }
 
+.hidden {
+    display: none;
+}
+
 @media (max-width: 940px) {
     .container {
         flex-direction: column;
