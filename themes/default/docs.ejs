@@ -27,16 +27,16 @@
                             <%- include('nav-file.ejs', { file: item }) %>
                         <% } else { %>
                             <li class="nav-itemContainer">
-                                <div class="nav-item" onclick="toggleSubMenu('<%= item.header %>')">
+                                <div class="nav-item" onclick="toggleSubMenu('<%= item.anchor %>')">
                                     <h1 class="nav-itemHeader"><%= item.header %></h1>
-                                    <div class="nav-toggle open" id="subMenuExpandIcon_<%= item.header %>">
+                                    <div class="nav-toggle open" id="subMenuExpandIcon_<%= item.anchor %>">
                                         <%- include("assets/images/expand_more_black_24dp.svg") %>
                                     </div>
-                                    <div class="nav-toggle" id="subMenuCollapseIcon_<%= item.header %>">
+                                    <div class="nav-toggle" id="subMenuCollapseIcon_<%= item.anchor %>">
                                         <%- include("assets/images/expand_less_black_24dp.svg") %>
                                     </div>
                                 </div>
-                                <ul class="nav-subMenu" id="subMenu_<%= item.header %>">
+                                <ul class="nav-subMenu" id="subMenu_<%= item.anchor %>">
                                     <% for (let file of item.files) { %>
                                         <%- include('nav-file.ejs', { file: file }) %>
                                     <% } %>
@@ -71,12 +71,12 @@
             </div>
             <% for (let item of docTree) { %>
                 <% if (item.type == 'file') { %>
-                    <div class="markdown" id="<%= item.id %>">
+                    <div class="markdown" id="<%= item.anchor %>">
                         <%- item.content %>
                     </div>
                 <% } else { %>
                     <% for (let file of item.files) { %>
-                        <div class="markdown" id="<%= file.id %>">
+                        <div class="markdown" id="<%= file.anchor %>">
                             <%- file.content %>
                         </div>
                     <% } %>

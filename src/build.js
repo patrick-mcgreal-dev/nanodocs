@@ -105,7 +105,8 @@ function getDocTree(dir, docStructure, folderName) {
 
             tree.push({
                 type: 'folder',
-                header: utils.escapeLinkText(item.folder),
+                header: item.folder,
+                anchor: utils.escapeLinkText(item.folder),
                 files: getDocTree(dirFolder, item.files, item.folder)
             });
 
@@ -127,7 +128,7 @@ function getDocTree(dir, docStructure, folderName) {
 
             tree.push({
                 type: 'file',
-                id: anchor,
+                anchor: anchor,
                 header: header.text,
                 content: content
             });
