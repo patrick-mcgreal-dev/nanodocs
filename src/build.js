@@ -25,16 +25,16 @@ function main() {
         // get/check nanodocs directories
 
         const dirNanodocs = path.join(dirWorking, 'nanodocs');
-        checkDirExists(dirNanodocs);
+        checkPathExists(dirNanodocs);
 
         const dirDocumentation = path.join(dirNanodocs, 'contents', 'documentation');
-        checkDirExists(dirDocumentation);
+        checkPathExists(dirDocumentation);
 
         dirAssets = path.join(dirNanodocs, 'contents', 'assets');
-        checkDirExists(dirAssets);
+        checkPathExists(dirAssets);
 
         const dirBuild = path.join(dirNanodocs, 'build');
-        checkDirExists(dirBuild);
+        checkPathExists(dirBuild);
 
         // get config
 
@@ -47,7 +47,7 @@ function main() {
             ? path.join(dirWorking, 'themes', config.theme.name)
             : path.join(dirModule, 'themes', config.theme.name);
 
-        checkDirExists(themeDir);
+        checkPathExists(themeDir);
 
         // render page
 
@@ -94,7 +94,7 @@ function getDocTree(dir, docStructure, folderName) {
         if (isFolder) {
 
             const dirFolder = path.join(dir, item.folder);
-            checkDirExists(dirFolder, `Can't find a folder called "${item.folder}" in directory "${dir}". Please create this folder or remove it from your config.json.`);
+            checkPathExists(dirFolder, `Can't find a folder called "${item.folder}" in directory "${dir}". Please create this folder or remove it from your config.json.`);
 
             tree.push({
                 type: 'folder',
@@ -105,7 +105,7 @@ function getDocTree(dir, docStructure, folderName) {
         } else {
 
             const pathFile = path.join(dir, item + '.md');
-            checkDirExists(pathFile, `Can't find a file called "${item + '.md'}" in directory "${dir}". Please create this file or remove it from your config.json.`);
+            checkPathExists(pathFile, `Can't find a file called "${item + '.md'}" in directory "${dir}". Please create this file or remove it from your config.json.`);
 
             folderName = folderName ?? 'root';
             const tokens = tokenizeMarkdown(pathFile);
@@ -194,7 +194,7 @@ function getMarkedRenderer(options) {
     const customImage = (href, title, alt) => {
 
         const dir = path.join(dirAssets, ...href.split('/'));
-        checkDirExists(dir);
+        checkPathExists(dir);
 
         const image = fs.readFileSync(dir, { encoding: 'base64' });
         const html = `<img src="data:image;base64, ${image}" title="${alt}">`;
@@ -215,7 +215,7 @@ function getMarkedRenderer(options) {
 
 // util functions
 
-function checkDirExists (path) {
+function checkPathExists (path) {
 
     if (!fs.existsSync(path)) {
         throw new Error(`directory or file "${path}" does not exist`);
