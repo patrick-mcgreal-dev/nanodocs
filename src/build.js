@@ -7,6 +7,9 @@ const sass = require('sass');
 const csso = require('csso');
 const marked = require('marked');
 
+const utils = require('./utils');
+const markedRenderers = require('./marked-renderers');
+
 const themes = [ 'default' ];
 const anchorSeparator = '+';
 
@@ -25,16 +28,16 @@ function main() {
         // get/check nanodocs directories
 
         const dirNanodocs = path.join(dirWorking, 'nanodocs');
-        checkPathExists(dirNanodocs);
+        utils.checkPathExists(dirNanodocs);
 
         const dirDocumentation = path.join(dirNanodocs, 'contents', 'documentation');
-        checkPathExists(dirDocumentation);
+        utils.checkPathExists(dirDocumentation);
 
         dirAssets = path.join(dirNanodocs, 'contents', 'assets');
-        checkPathExists(dirAssets);
+        utils.checkPathExists(dirAssets);
 
         const dirBuild = path.join(dirNanodocs, 'build');
-        checkPathExists(dirBuild);
+        utils.checkPathExists(dirBuild);
 
         // get config
 
@@ -43,11 +46,15 @@ function main() {
         // get/check theme directory
 
         const customTheme = themes.indexOf(config.theme.name) == -1;
-        const themeDir = customTheme 
-            ? path.join(dirWorking, 'themes', config.theme.name)
-            : path.join(dirModule, 'themes', config.theme.name);
+        let themeDir;
 
-        checkPathExists(themeDir);
+        if (customTheme) {
+            themeDir = path.join(dirWorking, 'themes', config.theme.name);
+        } else {
+            themeDir = path.join(dirModule, 'themes', config.theme.name);
+        }   
+
+        utils.checkPathExists(themeDir);
 
         // render page
 
@@ -94,24 +101,24 @@ function getDocTree(dir, docStructure, folderName) {
         if (isFolder) {
 
             const dirFolder = path.join(dir, item.folder);
-            checkPathExists(dirFolder, `Can't find a folder called "${item.folder}" in directory "${dir}". Please create this folder or remove it from your config.json.`);
+            utils.checkPathExists(dirFolder, `Can't find a folder called "${item.folder}" in directory "${dir}". Please create this folder or remove it from your config.json.`);
 
             tree.push({
                 type: 'folder',
-                header: escapeLinkText(item.folder),
+                header: utils.escapeLinkText(item.folder),
                 files: getDocTree(dirFolder, item.files, item.folder)
             });
 
         } else {
 
             const pathFile = path.join(dir, item + '.md');
-            checkPathExists(pathFile, `Can't find a file called "${item + '.md'}" in directory "${dir}". Please create this file or remove it from your config.json.`);
+            utils.checkPathExists(pathFile, `Can't find a file called "${item + '.md'}" in directory "${dir}". Please create this file or remove it from your config.json.`);
 
             folderName = folderName ?? 'root';
             const tokens = tokenizeMarkdown(pathFile);
             const header = tokens.find(t => t.type == 'heading' && t.depth == 1);
 
-            const anchor = escapeLinkText(folderName).concat(anchorSeparator, escapeLinkText(header.text));
+            const anchor = utils.escapeLinkText(folderName).concat(anchorSeparator, utils.escapeLinkText(header.text));
             const content = parseMarkdown(pathFile, getMarkedRenderer({ 
                 fileAnchor: anchor, 
                 linkIcons: config.linkIcons,
@@ -166,68 +173,22 @@ function parseMarkdown (srcDir, renderer) {
 
 function getMarkedRenderer(options) {
 
-    const customHeading = (text, level) => {
-
-        let html = '';
-
-        if (level == 1) {
-
-            const linkIcon = options.linkIcons ? `<a href="#${options.fileAnchor}" class="markdown-linkIcon"></a>` : '';
-            html = `<h${level} name="${options.fileAnchor}">${text}${linkIcon}</h${level}>`;
-
-        } else if (level == 2) {
-
-            const headerAnchor = options.fileAnchor ? options.fileAnchor.concat(anchorSeparator, escapeLinkText(text)) : escapeLinkText(text);
-            const linkIcon = options.linkIcons ? `<a href="#${headerAnchor}" class="markdown-linkIcon"></a>` : '';
-            html = `<h${level} name="${headerAnchor}">${text}${linkIcon}</h${level}>`;
-
-        } else {
-
-            html = `<h${level}>${text}</h${level}>`;
-
-        }
-
-        return html;
-
-    };
-
-    const customImage = (href, title, alt) => {
-
-        const dir = path.join(dirAssets, ...href.split('/'));
-        checkPathExists(dir);
-
-        const image = fs.readFileSync(dir, { encoding: 'base64' });
-        const html = `<img src="data:image;base64, ${image}" title="${alt}">`;
-
-        return html;
-
-    };
+    const headingRenderer = markedRenderers.heading(
+        options.linkIcons, 
+        options.fileAnchor,
+        anchorSeparator);
 
     let renderer = {
-        heading: customHeading
+        heading: headingRenderer
     };
     
-    if (options.inlineImages) { renderer.image = customImage; }
+    if (options.inlineImages) { 
+        const imageRenderer = markedRenderers.image(dirAssets);
+        renderer.image = imageRenderer;
+    }
 
     return renderer;
     
-}
-
-// util functions
-
-function checkPathExists (path) {
-
-    if (!fs.existsSync(path)) {
-        throw new Error(`directory or file "${path}" does not exist`);
-    }
-
-}
-
-function escapeLinkText(input) {
-    return input
-        .toLowerCase()
-        .replace(/[^\w]/g, '-') // replace spaces with dashes
-        .replace(/\-$/g, ''); // remove trailing dashes at the end of the string
 }
 
 module.exports = {
