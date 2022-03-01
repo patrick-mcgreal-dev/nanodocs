@@ -11,13 +11,11 @@
         <div class="nav-container">
             <nav class="nav">
                 <div class="nav-header">
-                    <h1 class="nav-headerText">
-                        <a href="#"><%= title %></a>
-                    </h1>
-                    <div class="nav-headerIcon open" id="navExpandIcon" onclick="toggleMenu()">
+                    <h1 class="nav-headerText"><%= title %></h1>
+                    <div class="nav-headerIcon open" id="navExpandIcon" onclick="openMenu()">
                         <%- include("assets/images/menu_book_black_24dp.svg") %>
                     </div>
-                    <div class="nav-headerIcon" id="navCollapseIcon" onclick="toggleMenu()">
+                    <div class="nav-headerIcon" id="navCollapseIcon" onclick="closeMenu()">
                         <%- include("assets/images/close_black_24dp.svg") %>
                     </div>
                 </div>

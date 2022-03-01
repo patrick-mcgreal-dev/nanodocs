@@ -54,7 +54,7 @@ function switchDoc(path) {
     lastDocAnchor = docAnchor;
 
     if (window.matchMedia('(max-width: 940px)').matches) {
-        toggleMenu();
+        closeMenu();
     }
 }
 
@@ -63,6 +63,24 @@ function toggleMenu() {
     toggleElement(document.querySelector('.nav-menu'));
     toggleElement(document.getElementById('navExpandIcon'));
     toggleElement(document.getElementById('navCollapseIcon'));
+
+}
+
+function openMenu() {
+
+    const menu = document.querySelector('.nav-menu');
+
+    if (!menu.classList.contains('open'))
+        toggleMenu();
+    
+}
+
+function closeMenu() {
+
+    const menu = document.querySelector('.nav-menu');
+
+    if (menu.classList.contains('open'))
+        toggleMenu();
 
 }
 
