@@ -197,15 +197,17 @@ function getMarkedRenderer(options) {
         checkDirExists(dir);
 
         const image = fs.readFileSync(dir, { encoding: 'base64' });
-        
         const html = `<img src="data:image;base64, ${image}" title="${alt}">`;
+
         return html;
 
     };
 
-    let renderer = {};
-    renderer.heading = customHeading;
-    if (options.inlineImages) { renderer.image = customImage }
+    let renderer = {
+        heading: customHeading
+    };
+    
+    if (options.inlineImages) { renderer.image = customImage; }
 
     return renderer;
     
