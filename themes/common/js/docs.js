@@ -52,6 +52,10 @@ function switchDoc(path) {
 
     lastFolderAnchor = folderAnchor;
     lastDocAnchor = docAnchor;
+
+    if (window.matchMedia('(max-width: 940px)').matches) {
+        toggleMenu();
+    }
 }
 
 function toggleMenu() {
