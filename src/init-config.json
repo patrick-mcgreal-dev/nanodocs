@@ -6,6 +6,7 @@
         "fontSize": "small"
     },
     "downloadEnabled": true,
+    "autoExpandSubmenus": false,
     "docs": [
         
     ]

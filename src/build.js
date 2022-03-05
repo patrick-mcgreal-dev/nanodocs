@@ -65,6 +65,7 @@ function main() {
             title: config.title,
             downloadEnabled: config.downloadEnabled,
             anchorSeparator: anchorSeparator,
+            autoExpandSubmenus: config.autoExpandSubmenus,
 
             css: csso.minify(sass.compile(path.join(themeDir, 'stylesheets', 'docs.scss')).css).css,
             fontClass: 'fontSize-' + config.theme.fontSize,
