@@ -6,6 +6,8 @@
         "fontSize": "small"
     },
     "downloadEnabled": true,
+    "inlineImages": true,
+    "linkIcons": true,
     "autoExpandSubmenus": false,
     "docs": [
         
