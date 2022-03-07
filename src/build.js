@@ -61,6 +61,7 @@ function main() {
         const appData = {
 
             docTree: getDocTree(dirDocumentation, config.docs),
+            home: config.home,
 
             title: config.title,
             downloadEnabled: config.downloadEnabled,
