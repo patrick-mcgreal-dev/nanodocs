@@ -13,10 +13,10 @@
                 <div class="nav-header">
                     <h1 class="nav-headerText"><%= title %></h1>
                     <div class="nav-headerIcon open" id="navExpandIcon" onclick="openMenu()">
-                        <%- include("assets/images/menu_book_black_24dp.svg") %>
+                        <%- include("../assets/images/menu_book_black_24dp.svg") %>
                     </div>
                     <div class="nav-headerIcon" id="navCollapseIcon" onclick="closeMenu()">
-                        <%- include("assets/images/close_black_24dp.svg") %>
+                        <%- include("../assets/images/close_black_24dp.svg") %>
                     </div>
                 </div>
                 <ul class="nav-menu">
@@ -28,10 +28,10 @@
                                 <div class="nav-item" onclick="toggleSubMenu('<%= item.anchor %>')">
                                     <h1 class="nav-itemHeader"><%= item.header %></h1>
                                     <div class="nav-toggle <%= autoExpandSubmenus ? '' : 'open' %>" id="subMenuExpandIcon_<%= item.anchor %>">
-                                        <%- include("assets/images/expand_more_black_24dp.svg") %>
+                                        <%- include("../assets/images/expand_more_black_24dp.svg") %>
                                     </div>
                                     <div class="nav-toggle <%= autoExpandSubmenus ? 'open' : '' %>" id="subMenuCollapseIcon_<%= item.anchor %>">
-                                        <%- include("assets/images/expand_less_black_24dp.svg") %>
+                                        <%- include("../assets/images/expand_less_black_24dp.svg") %>
                                     </div>
                                 </div>
                                 <ul class="nav-subMenu <%= autoExpandSubmenus ? 'open' : '' %>" id="subMenu_<%= item.anchor %>">
@@ -48,12 +48,12 @@
         <div class="markdown-container">
             <div class="markdown-topBar">
                 <span id="markdown-menuButton">
-                    <%- include("assets/images/settings_black_24dp.svg") %>
+                    <%- include("../assets/images/settings_black_24dp.svg") %>
                 </span>
                 <div class="markdown-menu" id="markdown-menu">
                     <div>
-                        <span class="markdown-menuItem" onclick="themeFontResize(10)"><%- include("assets/images/text_increase_black_24dp.svg") %></span>
-                        <span class="markdown-menuItem" onclick="themeFontResize(-10)"><%- include("assets/images/text_decrease_black_24dp.svg") %></span>
+                        <span class="markdown-menuItem" onclick="themeFontResize(10)"><%- include("../assets/images/text_increase_black_24dp.svg") %></span>
+                        <span class="markdown-menuItem" onclick="themeFontResize(-10)"><%- include("../assets/images/text_decrease_black_24dp.svg") %></span>
                     </div>
                     <div>
                         <span class="markdown-menuItem" onclick="themeChange('light')">Light</span>
@@ -63,7 +63,7 @@
                 </div>
                 <% if (downloadEnabled) { %>
                     <span id="markdown-menuButton" onclick="download()">
-                        <%- include("assets/images/download_black_24dp.svg") %>
+                        <%- include("../assets/images/download_black_24dp.svg") %>
                     </span>
                 <% } %>
             </div>
@@ -83,8 +83,9 @@
         </div>
     </div>
     <div class="hidden" id="linkIcon">
-        <%- include("assets/images/link_black_24dp.svg") %>
+        <%- include("../assets/images/link_black_24dp.svg") %>
     </div>
-    <%- include('../common/scripts.ejs') %>
+    <%- include('../../common/ejs/scripts.ejs') %>
+    <%- include('scripts.ejs') %>
 </body>
 </html>

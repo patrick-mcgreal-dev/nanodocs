@@ -73,7 +73,7 @@ function main() {
 
         };
 
-        renderPage(path.join(themeDir, 'docs.ejs'), path.join(dirBuild, 'index.html'), appData);
+        renderPage(path.join(themeDir, 'ejs', 'docs.ejs'), path.join(dirBuild, 'index.html'), appData);
 
         return {
             error: false,

@@ -46,12 +46,12 @@ function switchDoc(path) {
         doc.parentElement.scrollTop = 0;
     }
 
+    lastFolderAnchor = folderAnchor;
+    lastDocAnchor = docAnchor;
+
     if (folderAnchor != 'root') {
         openSubMenu(folderAnchor);
     }
-
-    lastFolderAnchor = folderAnchor;
-    lastDocAnchor = docAnchor;
 
     if (window.matchMedia('(max-width: 940px)').matches) {
         closeMenu();
@@ -141,14 +141,18 @@ function themeInit() {
 
     // font sizing
 
-    const rules = document.styleSheets[0].cssRules;
+    if (document.styleSheets[0]) {
 
-    for (let rule of rules) {
-        if (!rule.selectorText.includes(fontClass)) {
-            continue;
+        const rules = document.styleSheets[0].cssRules;
+
+        for (let rule of rules) {
+            if (!rule.selectorText.includes(fontClass)) {
+                continue;
+            }
+            currentFontSize = parseInt(rule.style.fontSize.replace('%', ''));
+            break;
         }
-        currentFontSize = parseInt(rule.style.fontSize.replace('%', ''));
-        break;
+
     }
 
     // header link icons
