@@ -166,7 +166,7 @@ function tokenizeMarkdown (srcDir) {
 
 function parseMarkdown (srcDir, renderer) {
 
-    marked.use({ renderer });
+    marked.use({ renderer: renderer });
 
     let fileContents = fs.readFileSync(srcDir, 'utf8');
     return marked.parse(fileContents);
