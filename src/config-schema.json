@@ -1,0 +1,34 @@
+{
+    "type": "object",
+    "properties": {
+        "title": { "type": "string" },
+        "theme": { 
+            "type": "object",
+            "properties": {
+                "name": { "type": "string" },
+                "variant": { "type": "string" },
+                "fontSize": { "type": "string" }
+            },
+            "required": [ "name", "variant", "fontSize" ]
+        },
+        "downloadEnabled": { "type": "boolean" },
+        "inlineImages": { "type": "boolean" },
+        "linkIcons": { "type": "boolean" },
+        "autoExpandSubmenus": { "type": "boolean" },
+        "docs": { 
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "folder": { "type": "string" },
+                    "files": { 
+                        "type": "array",
+                        "items": { "type": "string" }
+                    }
+                }
+            }
+        },
+        "home": { "type": "string" }
+    },
+    "required": [ "title", "docs", "home" ]
+}

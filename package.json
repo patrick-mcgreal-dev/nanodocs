@@ -5,6 +5,7 @@
   "author": "Patrick McGreal",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^8.10.0",
     "chalk": "^4.1.2",
     "csso": "^5.0.2",
     "ejs": "^3.1.6",

@@ -7,6 +7,11 @@ const sass = require('sass');
 const csso = require('csso');
 const marked = require('marked');
 
+const configSchema = require('./config-schema.json');
+const Ajv = require('ajv');
+const ajv = new Ajv({ allErrors: true });
+const validate = ajv.compile(configSchema);
+
 const utils = require('./utils');
 const markedRenderers = require('./marked-renderers');
 
@@ -42,6 +47,7 @@ function main() {
         // get config
 
         config = require(path.join(dirWorking, 'nanodocs', 'config.json'));
+        checkConfig();
 
         // get/check theme directory
 
@@ -92,7 +98,30 @@ function main() {
 
 }
 
-function getDocTree(dir, docStructure, folderName) {
+function checkConfig() {
+
+    config.theme.name = config.theme.name ?? 'default';
+    config.theme.variant = config.theme.variant ?? 'light';
+    config.theme.fontSize = config.theme.fontSize ?? 'small';
+
+    config.downloadEnabled = config.downloadEnabled ?? true;
+    config.inlineImages = config.inlineImages ?? true;
+    config.linkIcons = config.linkIcons ?? true;
+    config.autoExpandSubmenus = config.autoExpandSubmenus ?? true;
+
+    const valid = validate(config);
+
+    if (!valid) {
+
+        let errorMessage = 'invalid config.json file:\n\t';
+        errorMessage += validate.errors.map(e => [ e.instancePath, e.message ].join(' ')).join('\n\t');
+
+        throw new Error(errorMessage);
+
+    }
+
+}
+
 function getDocTree(dir, docStructure) {
 
     let tree = [];
@@ -108,7 +137,7 @@ function getDocTree(dir, docStructure) {
 
             const dirFolder = path.join(dir, item.folder);
             utils.checkPathExists(dirFolder, `Can't find a folder called "${item.folder}" in directory "${dir}". Please create this folder or remove it from your config.json.`);
-            
+
             tree.push({
                 type: 'folder',
                 header: item.folder,
