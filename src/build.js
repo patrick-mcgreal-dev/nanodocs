@@ -93,46 +93,27 @@ function main() {
 }
 
 function getDocTree(dir, docStructure, folderName) {
+function getDocTree(dir, docStructure) {
 
     let tree = [];
 
     for (let item of docStructure) {
 
-        const isFolder = typeof item != 'string';
+        if (item.folder == 'root') {
 
-        if (isFolder) {
+            const files = getFiles(dir, item.folder, item.files);
+            tree.push(...files);
+
+        } else {
 
             const dirFolder = path.join(dir, item.folder);
             utils.checkPathExists(dirFolder, `Can't find a folder called "${item.folder}" in directory "${dir}". Please create this folder or remove it from your config.json.`);
-
+            
             tree.push({
                 type: 'folder',
                 header: item.folder,
                 anchor: utils.escapeLinkText(item.folder),
-                files: getDocTree(dirFolder, item.files, item.folder)
-            });
-
-        } else {
-
-            const pathFile = path.join(dir, item + '.md');
-            utils.checkPathExists(pathFile, `Can't find a file called "${item + '.md'}" in directory "${dir}". Please create this file or remove it from your config.json.`);
-
-            folderName = folderName ?? 'root';
-            const tokens = tokenizeMarkdown(pathFile);
-            const header = tokens.find(t => t.type == 'heading' && t.depth == 1);
-
-            const anchor = utils.escapeLinkText(folderName).concat(anchorSeparator, utils.escapeLinkText(header.text));
-            const content = parseMarkdown(pathFile, getMarkedRenderer({ 
-                fileAnchor: anchor, 
-                linkIcons: config.linkIcons,
-                inlineImages: config.inlineImages
-            }));
-
-            tree.push({
-                type: 'file',
-                anchor: anchor,
-                header: header.text,
-                content: content
+                files: getFiles(dirFolder, item.folder, item.files)
             });
 
         }
@@ -142,6 +123,38 @@ function getDocTree(dir, docStructure, folderName) {
     return tree;
 
 }
+
+function getFiles(dir, folderName, fileNames) {
+
+    let files = [];
+
+    for (let fileName of fileNames) {
+
+        const pathFile = path.join(dir, fileName + '.md');
+        utils.checkPathExists(pathFile, `Can't find a file called "${fileName + '.md'}" in directory "${dir}". Please create this file or remove it from your config.json.`);
+
+        const tokens = tokenizeMarkdown(pathFile);
+        const header = tokens.find(t => t.type == 'heading' && t.depth == 1);
+
+        const anchor = utils.escapeLinkText(folderName).concat(anchorSeparator, utils.escapeLinkText(header.text));
+        const content = parseMarkdown(pathFile, getMarkedRenderer({ 
+            fileAnchor: anchor, 
+            linkIcons: config.linkIcons,
+            inlineImages: config.inlineImages
+        }));
+
+        files.push({
+            type: 'file',
+            anchor: anchor,
+            header: header.text,
+            content: content
+        });
+
+    }
+
+    return files;
+
+} 
 
 // ejs functions
 
