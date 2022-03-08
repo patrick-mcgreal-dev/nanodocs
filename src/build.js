@@ -114,11 +114,13 @@ function checkConfig() {
     if (!valid) {
 
         let errorMessage = 'invalid config.json file:\n\t';
-        errorMessage += validate.errors.map(e => [ e.instancePath, e.message ].join(' ')).join('\n\t');
+        errorMessage += validate.errors.map(e => e.instancePath + ' ' + e.message).join('\n\t');
 
         throw new Error(errorMessage);
 
     }
+
+    config.home = config.home ?? config.docs[0].folder + anchorSeparator + config.docs[0].files[0];
 
 }
 

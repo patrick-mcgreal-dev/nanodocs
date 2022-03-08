@@ -25,10 +25,12 @@
                         "type": "array",
                         "items": { "type": "string" }
                     }
-                }
-            }
+                },
+                "required": [ "folder", "files" ]
+            },
+            "minItems": 1
         },
         "home": { "type": "string" }
     },
-    "required": [ "title", "docs", "home" ]
+    "required": [ "title", "docs" ]
 }
