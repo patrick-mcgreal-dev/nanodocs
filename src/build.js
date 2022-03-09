@@ -100,8 +100,9 @@ function main() {
 
 function checkConfig() {
 
+    config.theme = config.theme ?? {};
     config.theme.name = config.theme.name ?? 'default';
-    config.theme.variant = config.theme.variant ?? 'light';
+    config.theme.variant = config.theme.variant ?? 'mid';
     config.theme.fontSize = config.theme.fontSize ?? 'small';
 
     config.downloadEnabled = config.downloadEnabled ?? true;
