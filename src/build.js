@@ -165,10 +165,8 @@ function getFiles(dir, folderName, fileNames) {
         const pathFile = path.join(dir, fileName + '.md');
         utils.checkPathExists(pathFile, `Can't find a file called "${fileName + '.md'}" in directory "${dir}". Please create this file or remove it from your config.json.`);
 
-        const tokens = tokenizeMarkdown(pathFile);
-        const header = tokens.find(t => t.type == 'heading' && t.depth == 1);
-
-        const anchor = utils.escapeLinkText(folderName).concat(anchorSeparator, utils.escapeLinkText(header.text));
+        const anchor = utils.escapeLinkText(folderName).concat(anchorSeparator, utils.escapeLinkText(fileName));
+        
         const content = parseMarkdown(pathFile, getMarkedRenderer({ 
             fileAnchor: anchor, 
             linkIcons: config.linkIcons,
@@ -178,7 +176,7 @@ function getFiles(dir, folderName, fileNames) {
         files.push({
             type: 'file',
             anchor: anchor,
-            header: header.text,
+            header: fileName,
             content: content
         });
 

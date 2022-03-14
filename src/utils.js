@@ -9,10 +9,14 @@ function checkPathExists (path) {
 }
 
 function escapeLinkText(input) {
+
     return input
         .toLowerCase()
-        .replace(/[^\w]/g, '-') // replace spaces with dashes
+        .replace(/[^A-Za-z0-9.\s]/g, '') // remove everything but alphanumerics, dots, and spaces
+        .replace(/\s+\s/g, ' ') // collapse consecutive spaces down into a single space
+        .replace(/\s/g, '-') // replace spaces with dashes
         .replace(/\-$/g, ''); // remove trailing dashes at the end of the string
+
 }
 
 module.exports = {
