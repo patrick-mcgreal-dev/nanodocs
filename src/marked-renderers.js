@@ -54,6 +54,10 @@ function image(dirAssets) {
         const dir = path.join(dirAssets, ...href.split('/'));
         utils.checkPathExists(dir);
 
+        if (fs.lstatSync(dir).isDirectory()) {
+            throw new Error(`can't load an image at the following path: ${dir}`);
+        }
+
         const image = fs.readFileSync(dir, { encoding: 'base64' });
         const html = `<img src="data:image;base64, ${image}" title="${alt}">`;
 
