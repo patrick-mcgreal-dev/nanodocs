@@ -201,13 +201,6 @@ function renderPage (sourceDir, destDir, data) {
 
 // markdown functions
 
-function tokenizeMarkdown (srcDir) {
-
-    let markdown = fs.readFileSync(srcDir, 'utf8');
-    return marked.lexer(markdown);
-
-}
-
 function parseMarkdown (srcDir, renderer) {
 
     marked.use({ renderer: renderer });
