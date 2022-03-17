@@ -67,7 +67,69 @@ function image(dirAssets) {
 
 }
 
+function next(nextAnchor) {
+
+    return {
+
+        name: 'next',
+        level: 'block',
+    
+        tokenizer(src, tokens) {
+    
+            const rule = /^(>{2})(?= )(.*)/;
+            const match = rule.exec(src);
+    
+            if (match) {
+                return {
+                    type: 'next',
+                    raw: match[0],
+                    text: match[2].trim()
+                };
+            }
+            
+        },
+    
+        renderer(token) {
+            return `<a href="#${nextAnchor}">${token.text}</a>`;
+        }
+
+    };
+
+}
+
+function previous(previousAnchor) {
+
+    return {
+
+        name: 'previous',
+        level: 'block',
+    
+        tokenizer(src, tokens) {
+    
+            const rule = /^(<{2})(?= )(.*)/;
+            const match = rule.exec(src);
+    
+            if (match) {
+                return {
+                    type: 'previous',
+                    raw: match[0],
+                    text: match[2].trim()
+                };
+            }
+            
+        },
+    
+        renderer(token) {
+            return `<a href="#${previousAnchor}">${token.text}</a>`;
+        }
+
+    };
+
+}
+
 module.exports = {
     heading,
-    image
+    image,
+    next,
+    previous
 }

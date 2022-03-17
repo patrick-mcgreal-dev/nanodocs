@@ -13,7 +13,7 @@ const ajv = new Ajv({ allErrors: true });
 const validate = ajv.compile(configSchema);
 
 const utils = require('./utils');
-const markedRenderers = require('./marked-renderers');
+const markedExtensions = require('./marked-extensions');
 
 const themes = [ 'default' ];
 const anchorSeparator = '+';
@@ -158,7 +158,7 @@ function getDocTree(dir, docStructure) {
 
 function getFiles(dir, folderName, fileNames) {
 
-    let files = [];
+    let unparsedFiles = [];
 
     for (let fileName of fileNames) {
 
@@ -167,22 +167,44 @@ function getFiles(dir, folderName, fileNames) {
 
         const anchor = utils.escapeLinkText(folderName).concat(anchorSeparator, utils.escapeLinkText(fileName));
         
-        const content = parseMarkdown(pathFile, getMarkedRenderer({ 
+        const markedRenderers = getMarkedRenderers({ 
             fileAnchor: anchor, 
             linkIcons: config.linkIcons,
             inlineImages: config.inlineImages
-        }));
+        });
 
-        files.push({
-            type: 'file',
-            anchor: anchor,
+        unparsedFiles.push({
+            path: pathFile,
             header: fileName,
+            renderers: markedRenderers,
+            anchor: anchor
+        });
+
+    }
+
+    let parsedFiles = [];
+
+    for (let i = 0; i < unparsedFiles.length; i++) {
+
+        const file = unparsedFiles[i];
+
+        let extensions = [
+            markedExtensions.next(unparsedFiles[i + 1]?.anchor),
+            markedExtensions.previous(unparsedFiles[i - 1]?.anchor)
+        ];
+
+        const content = parseMarkdown(file.path, file.renderers, extensions);
+
+        parsedFiles.push({
+            type: 'file',
+            anchor: file.anchor,
+            header: file.header,
             content: content
         });
 
     }
 
-    return files;
+    return parsedFiles;
 
 } 
 
@@ -201,18 +223,18 @@ function renderPage (sourceDir, destDir, data) {
 
 // markdown functions
 
-function parseMarkdown (srcDir, renderer) {
+function parseMarkdown(srcDir, renderer, extensions) {
 
-    marked.use({ renderer: renderer });
+    const fileContents = fs.readFileSync(srcDir, 'utf8');
 
-    let fileContents = fs.readFileSync(srcDir, 'utf8');
+    marked.use({ renderer: renderer, extensions: [...extensions] });
     return marked.parse(fileContents);
 
 }
 
-function getMarkedRenderer(options) {
+function getMarkedRenderers(options) {
 
-    const headingRenderer = markedRenderers.heading(
+    const headingRenderer = markedExtensions.heading(
         options.linkIcons, 
         options.fileAnchor,
         anchorSeparator);
@@ -222,7 +244,7 @@ function getMarkedRenderer(options) {
     };
     
     if (options.inlineImages) { 
-        const imageRenderer = markedRenderers.image(dirAssets);
+        const imageRenderer = markedExtensions.image(dirAssets);
         renderer.image = imageRenderer;
     }
 
