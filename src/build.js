@@ -15,7 +15,7 @@ const validate = ajv.compile(configSchema);
 const utils = require('./utils');
 const markedExtensions = require('./marked-extensions');
 
-const themes = [ 'default' ];
+const themes = [ 'default-docs' ];
 const anchorSeparator = '+';
 
 let config;
@@ -105,7 +105,7 @@ function main() {
 function checkConfig() {
 
     config.theme = config.theme ?? {};
-    config.theme.name = config.theme.name ?? 'default';
+    config.theme.name = config.theme.name ?? 'default-docs';
     config.theme.variant = config.theme.variant ?? 'mid';
     config.theme.fontSize = config.theme.fontSize ?? 'small';
     config.theme.linkIcons = config.theme.linkIcons ?? true;
