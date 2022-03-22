@@ -189,6 +189,16 @@ function themeInit() {
     for (let location of linkLocations) {
         location.innerHTML = linkIcon.innerHTML;
     }
+
+    // navigation
+
+    document.onkeydown = (e) => {
+        if (e.code == 'ArrowLeft') {
+            previousDoc();
+        } else if (e.code == 'ArrowRight') {
+            nextDoc();
+        }
+    }
 }
 
 function themeFontResize(inc) {
