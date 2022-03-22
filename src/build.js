@@ -72,11 +72,14 @@ function main() {
             title: config.title,
             downloadEnabled: config.downloadEnabled,
             anchorSeparator: anchorSeparator,
-            autoExpandSubmenus: config.autoExpandSubmenus,
+
+            theme: {
+                autoExpandSubmenus: config.theme.autoExpandSubmenus,
+                fontSizeClass: 'fontSize-' + config.theme.fontSize,
+                variantClass: 'themeVariant-' + config.theme.variant,
+            },
 
             css: csso.minify(sass.compile(path.join(themeDir, 'stylesheets', 'docs.scss')).css).css,
-            fontClass: 'fontSize-' + config.theme.fontSize,
-            themeVariantClass: 'themeVariant-' + config.theme.variant,
 
         };
 
@@ -104,11 +107,11 @@ function checkConfig() {
     config.theme.name = config.theme.name ?? 'default';
     config.theme.variant = config.theme.variant ?? 'mid';
     config.theme.fontSize = config.theme.fontSize ?? 'small';
+    config.theme.linkIcons = config.theme.linkIcons ?? true;
+    config.theme.autoExpandSubmenus = config.theme.autoExpandSubmenus ?? true;
 
     config.downloadEnabled = config.downloadEnabled ?? true;
     config.inlineImages = config.inlineImages ?? true;
-    config.linkIcons = config.linkIcons ?? true;
-    config.autoExpandSubmenus = config.autoExpandSubmenus ?? true;
 
     const valid = validate(config);
 
@@ -169,7 +172,7 @@ function getFiles(dir, folderName, fileNames) {
         
         const markedRenderers = getMarkedRenderers({ 
             fileAnchor: anchor, 
-            linkIcons: config.linkIcons,
+            linkIcons: config.theme.linkIcons,
             inlineImages: config.inlineImages
         });
 

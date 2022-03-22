@@ -1,6 +1,6 @@
 const title = '<%= title %>';
 const anchorSeparator = '<%= anchorSeparator %>';
-const fontClass = '<%= fontClass %>';
+const fontSizeClass = '<%= theme.fontSizeClass %>';
 
 const themeVariants = ['light', 'mid', 'dark'];
 
@@ -146,7 +146,7 @@ function themeInit() {
         const rules = document.styleSheets[0].cssRules;
 
         for (let rule of rules) {
-            if (!rule.selectorText.includes(fontClass)) {
+            if (!rule.selectorText.includes(fontSizeClass)) {
                 continue;
             }
             currentFontSize = parseInt(rule.style.fontSize.replace('%', ''));
