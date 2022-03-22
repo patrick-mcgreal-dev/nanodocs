@@ -15,7 +15,7 @@ const validate = ajv.compile(configSchema);
 const utils = require('./utils');
 const markedExtensions = require('./marked-extensions');
 
-const themes = [ 'default-docs' ];
+const themes = [ 'default-docs', 'default-book' ];
 const anchorSeparator = '+';
 
 let config;

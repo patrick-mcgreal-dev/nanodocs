@@ -1,0 +1,54 @@
+@use 'reset';
+@use 'fonts';
+@use 'nav';
+@use 'markdown';
+@use 'theme-variants';
+
+// DOCS
+// ====================================
+
+body {
+    font-family: Helvetica, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 1250px) {
+    .markdown-nav {
+        position: static;
+        width: 50%;
+        max-width: 50%;
+        height: 50px;   
+    }
+    .markdown-navPrevious {
+        float: left;
+    }
+}
+
+@media (max-width: 940px) {
+    .markdown-topBar {
+        padding: 7px 18px;
+    }
+    .markdown {
+        padding: 0 18px;
+    }
+}
+
+@media (max-width: 500px) {
+    .container {
+        flex-wrap: wrap;
+    }
+    .nav-container {
+        flex-basis: 100%;
+    }
+    .nav-headerIcon {
+        display: block;
+    }
+}
