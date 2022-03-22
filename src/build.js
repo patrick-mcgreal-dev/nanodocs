@@ -75,6 +75,7 @@ function main() {
 
             theme: {
                 autoExpandSubmenus: config.theme.autoExpandSubmenus,
+                docNavButtons: config.theme.docNavButtons,
                 fontSizeClass: 'fontSize-' + config.theme.fontSize,
                 variantClass: 'themeVariant-' + config.theme.variant,
             },
@@ -109,6 +110,7 @@ function checkConfig() {
     config.theme.fontSize = config.theme.fontSize ?? 'small';
     config.theme.linkIcons = config.theme.linkIcons ?? true;
     config.theme.autoExpandSubmenus = config.theme.autoExpandSubmenus ?? true;
+    config.theme.docNavButtons = config.theme.docNavButtons ?? false;
 
     config.downloadEnabled = config.downloadEnabled ?? true;
     config.inlineImages = config.inlineImages ?? true;

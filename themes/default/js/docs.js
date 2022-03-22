@@ -58,6 +58,32 @@ function switchDoc(path) {
     }
 }
 
+function nextDoc() {
+
+    const currentDoc = document.getElementById(window.location.hash.substring(1));
+
+    if (!currentDoc.nextElementSibling) {
+        return;
+    }
+
+    const nextDocId = currentDoc.nextElementSibling.id;
+    window.location.hash = '#' + nextDocId;
+
+}
+
+function previousDoc() {
+
+    const currentDoc = document.getElementById(window.location.hash.substring(1));
+
+    if (!currentDoc.previousElementSibling) {
+        return;
+    }
+
+    const nextDocId = currentDoc.previousElementSibling.id;
+    window.location.hash = '#' + nextDocId;
+
+}
+
 function toggleMenu() {
 
     toggleElement(document.querySelector('.nav-menu'));

@@ -27,14 +27,14 @@
                             <li class="nav-itemContainer">
                                 <div class="nav-item" onclick="toggleSubMenu('<%= item.anchor %>')">
                                     <h1 class="nav-itemHeader"><%= item.header %></h1>
-                                    <div class="nav-toggle <%= autoExpandSubmenus ? '' : 'open' %>" id="subMenuExpandIcon_<%= item.anchor %>">
+                                    <div class="nav-toggle <%= theme.autoExpandSubmenus ? '' : 'open' %>" id="subMenuExpandIcon_<%= item.anchor %>">
                                         <%- include("../assets/images/expand_more_black_24dp.svg") %>
                                     </div>
-                                    <div class="nav-toggle <%= autoExpandSubmenus ? 'open' : '' %>" id="subMenuCollapseIcon_<%= item.anchor %>">
+                                    <div class="nav-toggle <%= theme.autoExpandSubmenus ? 'open' : '' %>" id="subMenuCollapseIcon_<%= item.anchor %>">
                                         <%- include("../assets/images/expand_less_black_24dp.svg") %>
                                     </div>
                                 </div>
-                                <ul class="nav-subMenu <%= autoExpandSubmenus ? 'open' : '' %>" id="subMenu_<%= item.anchor %>">
+                                <ul class="nav-subMenu <%= theme.autoExpandSubmenus ? 'open' : '' %>" id="subMenu_<%= item.anchor %>">
                                     <% for (let file of item.files) { %>
                                         <%- include('nav-file.ejs', { file: file }) %>
                                     <% } %>
@@ -79,6 +79,18 @@
                         </div>
                     <% } %>
                 <% } %>
+            <% } %>
+            <% if (theme.docNavButtons) { %>
+            <div class="markdown-nav markdown-navPrevious">
+                <span onclick="previousDoc()">
+                    <%- include("../assets/images/navigate_before_black_24dp.svg") %>
+                </span>
+            </div>
+            <div class="markdown-nav markdown-navNext">
+                <span onclick="nextDoc()">
+                    <%- include("../assets/images/navigate_next_black_24dp.svg") %>
+                </span>
+            </div>
             <% } %>
         </div>
     </div>

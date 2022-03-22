@@ -20,6 +20,18 @@ body {
     display: none;
 }
 
+@media (max-width: 1250px) {
+    .markdown-nav {
+        position: static;
+        width: 50%;
+        max-width: 50%;
+        height: 50px;   
+    }
+    .markdown-navPrevious {
+        float: left;
+    }
+}
+
 @media (max-width: 940px) {
     .container {
         flex-direction: column;
