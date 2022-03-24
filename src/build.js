@@ -7,7 +7,7 @@ const sass = require('sass');
 const csso = require('csso');
 const marked = require('marked');
 
-const configSchema = require('./config-schema.json');
+const configSchema = require('./config/config-schema.json');
 const Ajv = require('ajv');
 const ajv = new Ajv({ allErrors: true });
 const validate = ajv.compile(configSchema);
@@ -62,6 +62,9 @@ function main() {
 
         utils.checkPathExists(themeDir);
 
+        const themeDefaults = require(path.join(themeDir, 'config-defaults.json'));
+        checkConfigTheme(themeDefaults);
+
         // render page
 
         const appData = {
@@ -108,9 +111,6 @@ function checkConfig() {
     config.theme.name = config.theme.name ?? 'default-docs';
     config.theme.variant = config.theme.variant ?? 'mid';
     config.theme.fontSize = config.theme.fontSize ?? 'small';
-    config.theme.linkIcons = config.theme.linkIcons ?? true;
-    config.theme.autoExpandSubmenus = config.theme.autoExpandSubmenus ?? true;
-    config.theme.docNavButtons = config.theme.docNavButtons ?? false;
 
     config.downloadEnabled = config.downloadEnabled ?? true;
     config.inlineImages = config.inlineImages ?? true;
@@ -127,6 +127,16 @@ function checkConfig() {
     }
 
     config.home = config.home ?? config.docs[0].folder + anchorSeparator + config.docs[0].files[0];
+
+}
+
+function checkConfigTheme(themeDefaults) {
+
+    Object.keys(themeDefaults).forEach(key => {
+
+        config.theme[key] = config.theme[key] ?? themeDefaults[key];
+
+    });
 
 }
 

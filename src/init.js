@@ -22,7 +22,7 @@ function main() {
         fs.mkdirSync(path.join(dirNanodocs, 'contents', 'documentation'));
         fs.mkdirSync(path.join(dirNanodocs, 'contents', 'assets'));
         fs.mkdirSync(path.join(dirNanodocs, 'build'));
-        fs.copyFileSync(path.join(dirModule, 'src', 'init-config.json'), path.join(dirNanodocs, 'config.json'));
+        fs.copyFileSync(path.join(dirModule, 'src', 'config', 'init-config.json'), path.join(dirNanodocs, 'config.json'));
 
         return {
             error: false,
