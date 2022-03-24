@@ -21,7 +21,16 @@ function heading (linkIcons, fileAnchor, anchorSeparator) {
 
         } else if (level == 2) {
 
-            let headerAnchor = utils.escapeLinkText(text);
+            let headerAnchor = text;
+
+            const splitEscapedText = text.split('//');
+
+            if (splitEscapedText && splitEscapedText[1]) {
+                text = splitEscapedText.join(' ');
+                headerAnchor = splitEscapedText[0];
+            }
+
+            headerAnchor = utils.escapeLinkText(headerAnchor);
 
             if (fileAnchor) {
                 headerAnchor = fileAnchor.concat(anchorSeparator, headerAnchor);
