@@ -1,4 +1,5 @@
 {
     "docNavButtons": false,
-    "linkIcons": true
+    "linkIcons": true,
+    "autoExpandSubmenus": true
 }

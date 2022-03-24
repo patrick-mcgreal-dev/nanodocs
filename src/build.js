@@ -67,6 +67,10 @@ function main() {
 
         // render page
 
+        const themeData = config.theme;
+        themeData.fontSizeClass = 'fontSize-' + config.theme.fontSize;
+        themeData.variantClass = 'themeVariant-' + config.theme.variant;
+
         const appData = {
 
             docTree: getDocTree(dirDocumentation, config.docs),
@@ -76,12 +80,7 @@ function main() {
             downloadEnabled: config.downloadEnabled,
             anchorSeparator: anchorSeparator,
 
-            theme: {
-                autoExpandSubmenus: config.theme.autoExpandSubmenus,
-                docNavButtons: config.theme.docNavButtons,
-                fontSizeClass: 'fontSize-' + config.theme.fontSize,
-                variantClass: 'themeVariant-' + config.theme.variant,
-            },
+            theme: themeData,
 
             css: csso.minify(sass.compile(path.join(themeDir, 'stylesheets', 'docs.scss')).css).css,
 

@@ -7,14 +7,15 @@
             "properties": {
                 "name": { "type": "string" },
                 "variant": { "type": "string" },
-                "fontSize": { "type": "string" }
+                "fontSize": { "type": "string" },
+                "autoExpandSubmenus": { "type": "boolean" },
+                "docNavButtons": { "type": "boolean" },
+                "linkIcons": { "type": "boolean" }
             },
             "required": [ "name", "variant", "fontSize" ]
         },
         "downloadEnabled": { "type": "boolean" },
         "inlineImages": { "type": "boolean" },
-        "linkIcons": { "type": "boolean" },
-        "autoExpandSubmenus": { "type": "boolean" },
         "docs": { 
             "type": "array",
             "items": {

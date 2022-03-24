@@ -1,4 +1,6 @@
 {
     "docNavButtons": true,
-    "linkIcons": false
+    "linkIcons": false,
+    "autoExpandSidebar": false,
+    "autoExpandSubmenus": true
 }
