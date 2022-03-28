@@ -4,7 +4,7 @@
 .markdown-container {
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .markdown-topBar {
@@ -188,7 +188,7 @@
     pre {
         display: inline-block;
         width: 100%;
-        overflow-x: scroll;
+        overflow-x: auto;
         box-sizing: border-box;
 
         border-radius: 4px;
