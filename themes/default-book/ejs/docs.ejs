@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="container" class="container <%= theme.variantClass %>">
-        <div id="nav-container" class="nav-container open">
+        <div id="nav-container" class="nav-container <%= theme.autoExpandSidebar ? 'open' : '' %>">
             <nav class="nav" id="nav">
                 <div class="nav-header">
                     <h1 class="nav-headerText"><a href="#<%= home %>"><%= title %></a></h1>
