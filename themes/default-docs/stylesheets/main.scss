@@ -45,6 +45,9 @@ body {
     .nav {
         padding: 12px;
     }
+    .nav-headerText {
+        line-height: 1em;
+    }
     .nav-headerIcon {
         &.open {
             display: flex;
