@@ -68,7 +68,7 @@ function image(dirAssets) {
         }
 
         const image = fs.readFileSync(dir, { encoding: 'base64' });
-        const html = `<img src="data:image;base64, ${image}" title="${alt}">`;
+        const html = `<span class="image"><img src="data:image;base64, ${image}" title="${alt}"></span>`;
 
         return html;
 

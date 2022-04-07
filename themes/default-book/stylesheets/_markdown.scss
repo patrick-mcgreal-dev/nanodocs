@@ -184,6 +184,11 @@
         font-family: courier; // style the img alt text - Firefox displays this rather than a broken image icon
     }
 
+    .image {
+        display: block;
+        text-align: center;
+    }
+
     code, pre {
         border-radius: 2px;
         border: 1px solid lightgrey;
