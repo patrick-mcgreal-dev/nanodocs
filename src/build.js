@@ -82,11 +82,11 @@ function main() {
 
             theme: themeData,
 
-            css: csso.minify(sass.compile(path.join(themeDir, 'stylesheets', 'docs.scss')).css).css,
+            css: csso.minify(sass.compile(path.join(themeDir, 'stylesheets', 'main.scss')).css).css,
 
         };
 
-        renderPage(path.join(themeDir, 'ejs', 'docs.ejs'), path.join(dirBuild, 'index.html'), appData);
+        renderPage(path.join(themeDir, 'ejs', 'main.ejs'), path.join(dirBuild, 'index.html'), appData);
 
         return {
             error: false,
