@@ -103,6 +103,14 @@
         align-items: center;
     }
 
+    h1 + .subheading {
+        position: relative;
+        top: -2.8rem;
+
+        font-size: 1.2rem;
+        line-height: 2rem;
+    }
+
     h2 {
         margin-top: 2.875rem;
         margin-bottom: 1.75rem;

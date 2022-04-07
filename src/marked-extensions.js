@@ -136,9 +136,40 @@ function previous(previousAnchor) {
 
 }
 
+function subheading() {
+
+    return {
+
+        name: 'subheading',
+        level: 'block',
+    
+        tokenizer(src, tokens) {
+    
+            const rule = /^(&{2})(?= )(.*)/;
+            const match = rule.exec(src);
+    
+            if (match) {
+                return {
+                    type: 'subheading',
+                    raw: match[0],
+                    text: match[2].trim()
+                };
+            }
+            
+        },
+    
+        renderer(token) {
+            return `<div class="subheading">${token.text}</div>`;
+        }
+
+    };
+
+}
+
 module.exports = {
     heading,
     image,
     next,
-    previous
+    previous,
+    subheading
 }

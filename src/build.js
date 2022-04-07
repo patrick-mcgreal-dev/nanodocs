@@ -204,7 +204,8 @@ function getFiles(dir, folderName, fileNames) {
 
         let extensions = [
             markedExtensions.next(unparsedFiles[i + 1]?.anchor),
-            markedExtensions.previous(unparsedFiles[i - 1]?.anchor)
+            markedExtensions.previous(unparsedFiles[i - 1]?.anchor),
+            markedExtensions.subheading()
         ];
 
         const content = parseMarkdown(file.path, file.renderers, extensions);
