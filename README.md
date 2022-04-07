@@ -24,4 +24,5 @@ Take a look at some examples in the [themes](https://patrick-mcgreal-dev.github.
 
 To learn how NanoDocs works, try working through the [example project](https://patrick-mcgreal-dev.github.io/nanodocs-docs/#example-project+getting-started).
 
-Alternatively, take a look at [GitHub repo](https://github.com/patrick-mcgreal-dev/nanodocs).
+- [GitHub](https://github.com/patrick-mcgreal-dev/nanodocs)
+- [npm](https://www.npmjs.com/package/nanodocs)
