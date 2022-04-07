@@ -3,7 +3,7 @@
 
 .nav-container {
     font-size: 16px; // fix nav font size across all theme variants
-    flex: 0 0 280px;
+    flex: 0 0 20em;
     height: 100%;
 
     border-right: 1px solid;
@@ -32,8 +32,10 @@
     display: flex;
     align-items: center;
 
-    font-size: 1em;
+    font-size: 1.4em;
     font-weight: 400;
+    line-height: 1.3em;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .nav-headerIcon {
@@ -48,7 +50,7 @@
     margin-top: 16px;
 
     .nav-itemContainer {
-        font-size: 0.83em;
+        font-size: 0.9em;
         font-weight: 400;
         text-transform: uppercase;
 
